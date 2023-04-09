@@ -1,19 +1,15 @@
 package itmo.p3108.util;
 
-import itmo.p3108.command.*;
+import itmo.p3108.chain.Handler;
+import itmo.p3108.chain.NoArgumentHandler;
+import itmo.p3108.command.FlyWeightCommandFactory;
 import itmo.p3108.command.type.Command;
-import itmo.p3108.command.type.NoArgumentCommand;
 import itmo.p3108.exception.CommandException;
 import itmo.p3108.exception.FileException;
 import itmo.p3108.exception.ValidationException;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Optional;
 
 /**
@@ -21,12 +17,11 @@ import java.util.Optional;
  */
 @Slf4j
 public class Invoker {
+    private static final Handler handler = new NoArgumentHandler();
     private static final Invoker invoker = new Invoker();
-    private final HashMap<String, Command> commands = new HashMap<>();
-    private final HashSet<String> executeScriptPaths = new HashSet<>();
+    private static final FlyWeightCommandFactory flyWeightCommandFactory = FlyWeightCommandFactory.getInstance();
 
     private Invoker() {
-        FlyWeightCommandFactory.getInstance().getValues().forEach(this::add);
     }
 
     public static Invoker getInstance() {
@@ -34,122 +29,45 @@ public class Invoker {
     }
 
     public Collection<Command> commands() {
-        return commands.values();
+        return flyWeightCommandFactory.getValues();
     }
 
-    public void add(@NonNull Command... commands) {
-        for (Command command : commands) {
-            if (!this.commands.containsKey(command.name())) {
-                this.commands.put(command.name(), command);
-            }
-        }
-    }
 
     /**
      * analyzing for different conditions  and then try to invoke command
      */
     public Optional<Command> invoke(String commandStr) {
+
+        if (commandStr.equals("")) {
+            return Optional.empty();
+        }
+        String[] strings;
+        if (commandStr.contains("\"")) {
+            strings = commandStr.split("\"");
+            String s = strings[0];
+            strings[0] = s.trim().toLowerCase();
+        } else {
+            strings = commandStr.trim().split("\\s+");
+        }
+        if (!flyWeightCommandFactory.contains(strings[0])) {
+
+            throw new CommandException("Error during execution command doesn't exist,use help command");
+        }
+        Command command = flyWeightCommandFactory.getCommand(strings[0]).get();
+        WrapperArgument wrapperArgument = new WrapperArgument();
+        wrapperArgument.setArgument(strings);
+        wrapperArgument.setCommand(command);
+
         try {
-            if (commandStr.equals("")) {
-                return Optional.empty();
-            }
-            String[] strings;
-            if (commandStr.contains("\"")) {
-                strings = commandStr.split("\"");
-                String s = strings[0];
-                strings[0] = s.trim();
-            } else {
-                strings = commandStr.trim().split("\\s+");
-            }
-            if (!commands.containsKey(strings[0].toLowerCase())) {
-
-                throw new CommandException("Error during execution command doesn't exist \n use help command");
-
-            }
-            Command command = commands.get(strings[0].toLowerCase());
-
-            if (command instanceof NoArgumentCommand) {
-                if (strings.length > 1) {
-                    log.error("Error during execution command " + command.name() + " doesn't have arguments");
-                    throw new CommandException("Error during execution command " + command.name() + " doesn't have arguments");
-                }
-
-            } else if (strings.length > 2 || strings.length == 1) {
-                log.error("Error during execution command " + command.name() + " has one argument ");
-                throw new CommandException("Error during execution command " + command.name() + " has one argument ");
-            }
-
-
-            try {
-                if (command instanceof FilterStartsWithName) {
-                    ((FilterStartsWithName) command).setSubstring(strings[1]);
-                    return Optional.of(command);
-
-                }
-                if (command instanceof Update) {
-                    Long l = Long.parseLong(strings[1]);
-                    ((Update) command).findPerson(l);
-                    return Optional.of(command);
-
-
-                }
-
-                if (command instanceof RemoveById) {
-                    Long l = Long.parseLong(strings[1]);
-                    ((RemoveById) command).setId(l);
-                    return Optional.of(command);
-
-
-                }
-
-                if (command instanceof CountByHeight) {
-                    double l = Double.parseDouble(strings[1]);
-                    ((CountByHeight) command).setHeight(l);
-                    return Optional.of(command);
-
-
-                }
-
-            } catch (NumberFormatException e) {
-                log.error("Error during execution command CountByHeight:number has wrong format ");
-                System.err.println("Error during execution command CountByHeight:number has wrong format ");
-            }
-            if (command instanceof ExecuteScript) {
-                if (executeScriptPaths.size() > 49) {
-                    throw new FileException("Too many files in executed_script");
-                }
-                String path = strings[1].toLowerCase();
-                if (executeScriptPaths.contains(path)) {
-                    log.error(String.format("Error : execute_script can't be executed %s.Recursion is forbidden", strings[1]));
-                    return Optional.of(command);
-
-
-                }
-                if (Files.exists(Path.of(path))) {
-                    executeScriptPaths.add(path);
-                    ((ExecuteScript) command).setPath(path);
-                    return Optional.of(command);
-
-
-                } else {
-                    log.error("Error during execution command :file " + strings[1] + " doesn't exist");
-                    throw new CommandException("Error during execution command :file " + strings[1] + " doesn't exist");
-                }
-            }
-            if (command instanceof NoArgumentCommand) {
-                return Optional.of(command);
-
-
-            }
-
-            if (Command.controller.isEmpty()) {
-                log.error("Collection is empty");
-                throw new ValidationException("Collection is empty");
-            }
+            return (Optional<Command>) handler.processRequest(wrapperArgument);
+        } catch (NumberFormatException e) {
+            log.error("Error during execution parameter must be a digit");
+            System.err.println("Error during execution parameter must be a digit ");
         } catch (ValidationException | CommandException | FileException e) {
             log.error(e.getMessage());
             System.err.println(e.getMessage());
         }
+
         return Optional.empty();
     }
 }

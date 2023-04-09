@@ -6,10 +6,7 @@ import itmo.p3108.util.Reflection;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Class FlyWeightCommandFactory generated all commands
@@ -18,7 +15,7 @@ import java.util.Set;
 @Slf4j
 public class FlyWeightCommandFactory {
     private static final FlyWeightCommandFactory FLY_WEIGHT_COMMAND = new FlyWeightCommandFactory();
-    private final HashMap<String, Command> COMMAND_MAP = new HashMap<>();
+    private final Map<String, Command> COMMAND_MAP = new HashMap<>();
 
     /**
      * in constructor  reflections is used  to find all commands in project
@@ -47,7 +44,9 @@ public class FlyWeightCommandFactory {
     public static FlyWeightCommandFactory getInstance() {
         return FLY_WEIGHT_COMMAND;
     }
-
+public boolean contains(String key){
+       return COMMAND_MAP.containsKey(key);
+}
     public Optional<Command> getCommand(String name) {
         return Optional.of(COMMAND_MAP.get(name.toLowerCase().trim()));
     }
