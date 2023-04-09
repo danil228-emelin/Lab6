@@ -26,14 +26,6 @@ public class Main {
         UDPReceiver udpReceiver = new UDPReceiver ();
         udpReceiver.receive ();
 
-        //        FileValidator fileValidator = new FileValidator();
-//        String path = fileValidator.findFile();
-//        Optional<CollectionController> optionalCollectionController = Parser.read(path);
-//        optionalCollectionController.ifPresent(CollectionController::setController);
-//        new CheckData().checkPersonCollection(CollectionController.getInstance().getPersonList());
-//        Invoker invoker = Invoker.getInstance();
-//        while (true) {
-//            invoker.invoke(UserReader.read());
-//        }
+
     }
 }
