@@ -9,13 +9,16 @@ import java.net.SocketException;
 import java.util.Optional;
 
 @Slf4j
+/**
+ * receive from client.
+ */
 public class UDPReceiver {
     private DatagramSocket socket;
     private byte[] buf = new byte[1000];
 
-    public UDPReceiver(int clientPort) {
+    public UDPReceiver(int ServerPort) {
         try {
-            socket = new DatagramSocket(clientPort);
+            socket = new DatagramSocket(ServerPort);
         } catch (SocketException e) {
             log.error(e.getMessage());
         }

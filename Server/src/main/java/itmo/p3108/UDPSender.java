@@ -9,6 +9,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
 @Slf4j
+/**
+ * Send to client.
+ */
 public class UDPSender {
     private final ByteBuffer buffer = ByteBuffer.allocate(100000);
     private DatagramChannel channel;

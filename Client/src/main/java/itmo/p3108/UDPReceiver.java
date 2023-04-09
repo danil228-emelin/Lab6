@@ -15,14 +15,9 @@ public class UDPReceiver {
     private DatagramSocket socket;
     private InetSocketAddress address;
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    public UDPReceiver(int serverPort) {
+    public UDPReceiver(int clientPort) {
         try {
-            address = new InetSocketAddress("localhost", serverPort);
+            address = new InetSocketAddress("localhost", clientPort);
             channel = DatagramChannel.open();
             socket = channel.socket();
             channel.configureBlocking(false);
@@ -31,6 +26,11 @@ public class UDPReceiver {
             log.error(exception.getMessage());
         }
 
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
     public String receive() {
@@ -52,5 +52,9 @@ public class UDPReceiver {
                 return s;
             }
         }
+    }
+
+    public int getAddress() {
+        return address.getPort();
     }
 }

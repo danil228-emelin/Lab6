@@ -48,7 +48,7 @@ public class Invoker {
     /**
      * analyzing for different conditions  and then try to invoke command
      */
-    public Optional<byte[]> invoke(String commandStr) {
+    public Optional<Command> invoke(String commandStr) {
         try {
             if (commandStr.equals("")) {
                 return Optional.empty();
@@ -83,27 +83,30 @@ public class Invoker {
             try {
                 if (command instanceof FilterStartsWithName) {
                     ((FilterStartsWithName) command).setSubstring(strings[1]);
-                    return SerializeObject.serialize(command);
+                    return Optional.of(command);
 
                 }
                 if (command instanceof Update) {
                     Long l = Long.parseLong(strings[1]);
                     ((Update) command).findPerson(l);
-                    return SerializeObject.serialize(command);
+                    return Optional.of(command);
+
 
                 }
 
                 if (command instanceof RemoveById) {
                     Long l = Long.parseLong(strings[1]);
                     ((RemoveById) command).setId(l);
-                    return SerializeObject.serialize(command);
+                    return Optional.of(command);
+
 
                 }
 
                 if (command instanceof CountByHeight) {
                     double l = Double.parseDouble(strings[1]);
                     ((CountByHeight) command).setHeight(l);
-                    return SerializeObject.serialize(command);
+                    return Optional.of(command);
+
 
                 }
 
@@ -118,13 +121,15 @@ public class Invoker {
                 String path = strings[1].toLowerCase();
                 if (executeScriptPaths.contains(path)) {
                     log.error(String.format("Error : execute_script can't be executed %s.Recursion is forbidden", strings[1]));
-                    return SerializeObject.serialize(command);
+                    return Optional.of(command);
+
 
                 }
                 if (Files.exists(Path.of(path))) {
                     executeScriptPaths.add(path);
                     ((ExecuteScript) command).setPath(path);
-                    return SerializeObject.serialize(command);
+                    return Optional.of(command);
+
 
                 } else {
                     log.error("Error during execution command :file " + strings[1] + " doesn't exist");
@@ -132,7 +137,8 @@ public class Invoker {
                 }
             }
             if (command instanceof NoArgumentCommand) {
-                return SerializeObject.serialize(command);
+                return Optional.of(command);
+
 
             }
 

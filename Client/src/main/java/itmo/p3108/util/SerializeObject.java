@@ -14,13 +14,14 @@ public class SerializeObject {
     }
 
 
-    public static <T extends Command> Optional<byte[]> serialize(T command) {
+    public static <T extends Command> Optional<byte[]> serialize(T command,int port) {
         try {
-
-
+            MessageServer messageServer = new MessageServer();
+            messageServer.setCommand(command);
+            messageServer.setPort(port);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(command);
+            objectOutputStream.writeObject(messageServer);
             objectOutputStream.flush();
             return Optional.of(byteArrayOutputStream.toByteArray());
         } catch (IOException exception) {

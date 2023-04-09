@@ -1,6 +1,8 @@
 package itmo.p3108;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.util.Invoker;
+import itmo.p3108.util.SerializeObject;
 import itmo.p3108.util.UserReader;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,11 +25,18 @@ public class Main {
         UDPReceiver udpReceiver = new UDPReceiver(8989);
         Invoker invoker = Invoker.getInstance();
         while (true) {
-            Optional<byte[]> serializedCommand = invoker.invoke(UserReader.read());
-            serializedCommand.ifPresentOrElse(sender::send, () -> {
-                System.err.println("Can't send to server  ");
+            Optional<Command> command = invoker.invoke(UserReader.read());
+            command.ifPresentOrElse((x) -> {
+                Optional<byte[]> serializedObject = SerializeObject.serialize(x, udpReceiver.getAddress());
+                serializedObject.ifPresentOrElse(sender::send, () -> {
+                    System.err.println("Can't send serialized object,it is empty");
+                });
+            }, () -> {
+                System.err.println("Can't send to server,command is empty");
             });
             System.out.println(udpReceiver.receive());
         }
+
     }
+
 }

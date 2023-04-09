@@ -2,7 +2,6 @@ package itmo.p3108.util;
 
 import itmo.p3108.UDPReceiver;
 import itmo.p3108.UDPSender;
-import itmo.p3108.command.type.Command;
 
 import java.util.Optional;
 
@@ -16,17 +15,17 @@ public class Executor {
         serializedObject.ifPresentOrElse(x -> {
             Optional<?> command = DeserializeObject.deserializeObject(x);
             command.ifPresentOrElse(co -> {
-                if (co instanceof Command) {
-                    String result = ((Command) co).execute();
-                    udpSender.send(result, 8989);
+                if (co instanceof MessageServer messageServer) {
+                    String result = messageServer.getCommand().execute();
+                    udpSender.send(result, messageServer.getPort());
                 } else {
-                    System.err.println("serializedObject isn't command");
+                    System.err.println("serializedObject isn't messageServer");
                 }
             }, () -> {
-                System.err.println("command is null,Can't deserialize");
+                System.err.println("message is null,Can't deserialize");
             });
         }, () -> {
-            System.err.println("Didn't get  serializedObject");
+            System.err.println("Didn't get  message");
         });
     }
 
