@@ -1,12 +1,10 @@
 package itmo.p3108;
 
-import itmo.p3108.parser.Parser;
-import itmo.p3108.util.*;
+import itmo.p3108.util.Invoker;
+import itmo.p3108.util.UserReader;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Optional;
 
 /**
@@ -19,13 +17,17 @@ import java.util.Optional;
  */
 @Slf4j
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        /*UDPSender sender = new UDPSender ();
-        sender.sendEcho ("lala");
-*/
-        UDPReceiver udpReceiver = new UDPReceiver ();
-        udpReceiver.receive ();
+    public static void main(String[] args) throws IOException {
 
-
+        UDPSender sender = new UDPSender(4445);
+        UDPReceiver udpReceiver = new UDPReceiver(8989);
+        Invoker invoker = Invoker.getInstance();
+        while (true) {
+            Optional<byte[]> serializedCommand = invoker.invoke(UserReader.read());
+            serializedCommand.ifPresentOrElse(sender::send, () -> {
+                System.err.println("Can't send to server  ");
+            });
+            System.out.println(udpReceiver.receive());
+        }
     }
 }

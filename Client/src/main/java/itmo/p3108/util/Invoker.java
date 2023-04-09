@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 
 /**
  * Class invoker,invoke and analyze commands
@@ -47,10 +48,10 @@ public class Invoker {
     /**
      * analyzing for different conditions  and then try to invoke command
      */
-    public void invoke(String commandStr) {
+    public Optional<byte[]> invoke(String commandStr) {
         try {
             if (commandStr.equals("")) {
-                return;
+                return Optional.empty();
             }
             String[] strings;
             if (commandStr.contains("\"")) {
@@ -82,28 +83,28 @@ public class Invoker {
             try {
                 if (command instanceof FilterStartsWithName) {
                     ((FilterStartsWithName) command).setSubstring(strings[1]);
-                    System.out.println(command.execute());
-                    return;
+                    return SerializeObject.serialize(command);
+
                 }
                 if (command instanceof Update) {
                     Long l = Long.parseLong(strings[1]);
                     ((Update) command).findPerson(l);
-                    System.out.println(command.execute());
-                    return;
+                    return SerializeObject.serialize(command);
+
                 }
 
                 if (command instanceof RemoveById) {
                     Long l = Long.parseLong(strings[1]);
                     ((RemoveById) command).setId(l);
-                    System.out.println(command.execute());
-                    return;
+                    return SerializeObject.serialize(command);
+
                 }
 
                 if (command instanceof CountByHeight) {
                     double l = Double.parseDouble(strings[1]);
                     ((CountByHeight) command).setHeight(l);
-                    System.out.println(command.execute());
-                    return;
+                    return SerializeObject.serialize(command);
+
                 }
 
             } catch (NumberFormatException e) {
@@ -117,33 +118,33 @@ public class Invoker {
                 String path = strings[1].toLowerCase();
                 if (executeScriptPaths.contains(path)) {
                     log.error(String.format("Error : execute_script can't be executed %s.Recursion is forbidden", strings[1]));
-                    System.err.printf("Error : execute_script can't be executed %s.Recursion is forbidden\n", strings[1]);
-                    return;
+                    return SerializeObject.serialize(command);
+
                 }
                 if (Files.exists(Path.of(path))) {
                     executeScriptPaths.add(path);
                     ((ExecuteScript) command).setPath(path);
-                    System.out.println(command.execute());
-                    return;
+                    return SerializeObject.serialize(command);
+
                 } else {
                     log.error("Error during execution command :file " + strings[1] + " doesn't exist");
                     throw new CommandException("Error during execution command :file " + strings[1] + " doesn't exist");
                 }
             }
             if (command instanceof NoArgumentCommand) {
-                System.out.println(command.execute());
-                return;
+                return SerializeObject.serialize(command);
+
             }
 
             if (Command.controller.isEmpty()) {
                 log.error("Collection is empty");
                 throw new ValidationException("Collection is empty");
             }
-        } catch (ValidationException | CommandException|FileException e) {
+        } catch (ValidationException | CommandException | FileException e) {
             log.error(e.getMessage());
             System.err.println(e.getMessage());
         }
-
+        return Optional.empty();
     }
 }
 

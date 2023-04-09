@@ -3,7 +3,6 @@ package itmo.p3108.command;
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.IndependentCommand;
 import itmo.p3108.command.type.NoArgumentCommand;
-import itmo.p3108.util.Invoker;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +22,7 @@ public class Help implements NoArgumentCommand, IndependentCommand {
     @Override
     public String execute() {
 
-        return Invoker.getInstance().commands()
+        return FlyWeightCommandFactory.getInstance().getValues()
                 .stream()
                 .map(Command::description)
                 .collect(Collectors.joining("\n"));

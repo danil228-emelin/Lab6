@@ -48,6 +48,9 @@ public class FlyWeightCommandFactory {
         return FLY_WEIGHT_COMMAND;
     }
 
+    public Optional<Command> getCommand(String name) {
+        return Optional.of(COMMAND_MAP.get(name.toLowerCase().trim()));
+    }
 
     /**
      * @return all commands which contains factory

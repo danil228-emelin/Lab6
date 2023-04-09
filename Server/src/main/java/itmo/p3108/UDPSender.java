@@ -1,26 +1,40 @@
 package itmo.p3108;
+
+import itmo.p3108.util.FlyweightClientSocket;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+
+@Slf4j
 public class UDPSender {
-    private boolean isCommandWithObject;
-    private InetSocketAddress serverAddress;
     private final ByteBuffer buffer = ByteBuffer.allocate(100000);
     private DatagramChannel channel;
-    public UDPSender () throws IOException {
-        channel = DatagramChannel.open ();
-        channel.bind(null);
-        serverAddress = new InetSocketAddress("localhost", 8989);
-        channel.configureBlocking(false);
+
+    public UDPSender() {
+        try {
+            channel = DatagramChannel.open();
+            channel.bind(null);
+
+            channel.configureBlocking(false);
+        } catch (IOException exception) {
+            log.error(exception.getMessage());
+        }
+
     }
 
-    public  void send() throws IOException {
-        buffer.clear();
-        buffer.put("serverToClient".getBytes());
-        buffer.flip();
-        channel.send(buffer, serverAddress);
-        buffer.flip();
+    public void send(String message, int clientPort) {
+        try {
+            buffer.clear();
+            buffer.put(message.getBytes());
+            buffer.flip();
+            InetSocketAddress serverAddress = FlyweightClientSocket.getClientSocket(Integer.toString(clientPort));
+            channel.send(buffer, serverAddress);
+            buffer.flip();
+        } catch (IOException exception) {
+            log.error(exception.getMessage());
         }
+    }
 }

@@ -1,11 +1,12 @@
 package itmo.p3108;
 
 import itmo.p3108.parser.Parser;
-import itmo.p3108.util.*;
+import itmo.p3108.util.CollectionController;
+import itmo.p3108.util.Executor;
+import itmo.p3108.util.FileValidator;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.Optional;
 
 /**
@@ -19,21 +20,16 @@ import java.util.Optional;
 @Slf4j
 public class Main {
     public static void main(String[] args) throws IOException {
-        /*UDPReceiver receiver = new UDPReceiver();
-        while (true){
-            receiver.receive();
-        }*/
-        UDPSender udpSender = new UDPSender ();
-        udpSender.send ();
+        FileValidator fileValidator = new FileValidator();
+        String path = fileValidator.findFile();
+        Optional<CollectionController> optionalCollectionController = Parser.read(path);
+        optionalCollectionController.ifPresent(CollectionController::setController);
 
-//        FileValidator fileValidator = new FileValidator();
-//        String path = fileValidator.findFile();
-//        Optional<CollectionController> optionalCollectionController = Parser.read(path);
-//        optionalCollectionController.ifPresent(CollectionController::setController);
-//        new CheckData().checkPersonCollection(CollectionController.getInstance().getPersonList());
-//        Invoker invoker = Invoker.getInstance();
-//        while (true) {
-//            invoker.invoke(UserReader.read());
-//        }
+        UDPSender udpSender = new UDPSender();
+        UDPReceiver receiver = new UDPReceiver(4445);
+        while (true) {
+            Executor.executeCommand(udpSender, receiver);
+        }
+
     }
 }

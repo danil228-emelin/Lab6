@@ -1,5 +1,7 @@
 package itmo.p3108.command.type;
 
+import java.io.Serializable;
+
 /**
  * interface-marker,implements by no argument command
  */
