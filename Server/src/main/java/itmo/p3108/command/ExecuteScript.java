@@ -20,6 +20,8 @@
 //@Slf4j
 //@NoArgsConstructor(access = AccessLevel.PUBLIC)
 //public class ExecuteScript implements Command {
+//    @Serial
+//    private static final long serialVersionUID = 549988001L;
 //    private static final String ERROR_PERMISSION = "ExecuteScript error during setting path:can't read and write  file";
 //    private static final String IOEXCEPTION = "Execute Script:fail error ";
 //    private String path;

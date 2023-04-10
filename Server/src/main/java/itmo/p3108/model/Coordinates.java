@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * class Coordinates using as coordinates for  @see {@link Person}
@@ -19,7 +21,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @AllArgsConstructor
 @XmlRootElement(name = "coordinates")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Coordinates {
+public class Coordinates implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 499988001L;
     @XmlElement(name = "x")
     private Integer coordinatesX;
     @XmlElement(name = "y")

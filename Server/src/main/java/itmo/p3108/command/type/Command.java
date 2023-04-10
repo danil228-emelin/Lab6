@@ -11,8 +11,6 @@ import java.io.Serializable;
 public interface Command extends Serializable {
     CollectionController controller = CollectionController.getInstance();
 
-    String execute();
-
     String description();
 
     String name();

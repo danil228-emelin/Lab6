@@ -3,6 +3,7 @@ package itmo.p3108.model;
 import itmo.p3108.adapter.LocalDateAdapter;
 import itmo.p3108.util.CheckData;
 import itmo.p3108.util.UserReader;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -13,7 +14,8 @@ import java.util.Optional;
  * Class PersonReadingBuilder created to build all @see {@link Person} attributes using console input
  */
 public final class PersonReadingBuilder {
-    private static PersonReadingBuilder createPerson;
+    private static PersonReadingBuilder createPerson = new PersonReadingBuilder();
+    @Getter
     private static Long id = 1L;
     private final CheckData checkData = new CheckData();
 
@@ -27,9 +29,6 @@ public final class PersonReadingBuilder {
     }
 
     public static PersonReadingBuilder getInstance() {
-        if (createPerson == null) {
-            createPerson = new PersonReadingBuilder();
-        }
         return createPerson;
     }
 

@@ -1,12 +1,14 @@
 package itmo.p3108.command;
 
 import itmo.p3108.command.type.Command;
+import itmo.p3108.command.type.OneArgument;
+import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.Person;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Serial;
 import java.util.stream.Collectors;
 
 /**
@@ -14,26 +16,16 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class FilterStartsWithName implements Command {
+public class FilterStartsWithName implements  OneArgument {
 
+    @Serial
+    private static final long serialVersionUID = 589988002L;
     private String substring;
 
     /**
      * @return the result of command
      */
 
-    @Override
-    public String execute() {
-
-        return
-                controller
-                        .getPersonList()
-                        .stream()
-                        .filter(x -> x.getPersonName().startsWith(substring))
-                        .parallel()
-                        .map(Person::toString)
-                        .collect(Collectors.joining("\n"));
-    }
 
     @Override
     public String description() {
@@ -48,7 +40,24 @@ public class FilterStartsWithName implements Command {
     /**
      * set the argument
      */
-    public void setSubstring(@NonNull String substring) {
-        this.substring = substring.toLowerCase();
+
+    @Override
+    public String execute(Object argument) {
+        if (argument instanceof String s) {
+            return
+                    controller
+                            .getPersonList()
+                            .stream()
+                            .filter(x -> x.getPersonName().startsWith(s))
+                            .parallel()
+                            .map(Person::toString)
+                            .collect(Collectors.joining("\n"));
+        }
+        throw new ValidationException("Wrong argument for FilterStartsWithName");
+    }
+
+    @Override
+    public Object getParameter() {
+        return substring;
     }
 }

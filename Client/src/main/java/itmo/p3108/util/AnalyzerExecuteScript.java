@@ -1,3 +1,4 @@
+/*
 package itmo.p3108.util;
 
 import itmo.p3108.command.type.Command;
@@ -7,10 +8,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+*/
 /**
  * Class AnalyzerExecuteScript analyze lines from execute script
  * it needs to detect add command
- */
+ *//*
+
 public class AnalyzerExecuteScript {
     private static final String ADD_EXECUTE_SCRIPT_EXCEPTION1 = "Error add:next line empty ,but it  must have arguments";
     private static final String ADD_PROPER_ARGUMENTS_ORDER = "parameters format:id,name,coordinate.x,coordinate.y,height,birthday, eyeColor number ,nationality number,location.x,location.y,location.z,location.name";
@@ -59,3 +62,4 @@ public class AnalyzerExecuteScript {
 
     }
 }
+*/

@@ -1,14 +1,16 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.IndependentCommand;
-import itmo.p3108.command.type.NoArgumentCommand;
+import itmo.p3108.command.type.NoArgument;
+import itmo.p3108.command.type.OneArgument;
+import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.Person;
 import itmo.p3108.model.PersonReadingBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.ZonedDateTime;
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * Command Add,add element in collection
@@ -16,43 +18,24 @@ import java.time.ZonedDateTime;
  * User enters data,but  while script executing Add take arguments from script file
  * Next line is treated as arguments
  *
- * @see ExecuteScript
+ *
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@SuppressWarnings("unused")
-public class Add implements NoArgumentCommand, IndependentCommand {
+public class Add implements OneArgument {
     private static final PersonReadingBuilder personReadingBuilder = PersonReadingBuilder.getInstance();
+    @Serial
+    private static final long serialVersionUID = 589988001L;
+    private Person person;
 
-    /**
-     * @return result of execution
-     * {@link PersonReadingBuilder} is used to read and check information from  console
-     */
-    @Override
-    public String execute() {
-        Person person = Person
-                .builder()
-                .personName(personReadingBuilder.createName())
-                .personId(personReadingBuilder.createId())
-                .personHeight(personReadingBuilder.createHight())
-                .personEyeColor(personReadingBuilder.createColor())
-                .personNationality(personReadingBuilder.createNationality())
-                .personBirthday(personReadingBuilder.createBirthDay())
-                .coordinates(personReadingBuilder.createCoordinates())
-                .location(personReadingBuilder.createLocation())
-                .build();
-        person.setPersonCreationDate(ZonedDateTime.now());
-        controller.getPersonList().add(person);
+    public void execute(String argument) {
 
-        return "object created ";
-
-
+        if (argument != null) {
+            throw new ValidationException("Add doesn't have argument");
+        }
+        person = CreatePerson.createPerson();
     }
 
-    @Override
-    public String description() {
-        return "add {element} : добавить новый элемент в коллекцию";
-    }
 
 
     @Override

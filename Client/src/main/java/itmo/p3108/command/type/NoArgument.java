@@ -1,10 +1,7 @@
 package itmo.p3108.command.type;
 
-import java.io.Serializable;
-
 /**
  * interface-marker,implements by no argument command
  */
-public interface NoArgumentCommand extends Command {
-
+public interface NoArgument extends Command {
 }

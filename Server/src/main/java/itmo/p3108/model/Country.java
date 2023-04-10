@@ -2,14 +2,18 @@ package itmo.p3108.model;
 
 import com.sun.istack.Nullable;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
 
 /**
  * class Country using to describe current location of  @see {@link Person}
  */
-public enum Country {
+public enum Country implements Serializable {
     RUSSIA("1)russia"), FRANCE("2)france"), SPAIN("3)spain"), NORTH_KOREA("4)north_korea");
+    @Serial
+    private static final long serialVersionUID = 498988001L;
     private final String name;
 
     Country(String s) {

@@ -1,10 +1,11 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.IndependentCommand;
-import itmo.p3108.command.type.NoArgumentCommand;
+import itmo.p3108.command.type.NoArgument;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.Serial;
 
 /**
  * Command Info, put out major information of collection
@@ -12,23 +13,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Info implements NoArgumentCommand, IndependentCommand {
-    @Override
-
-    /**
-     * put out major information of collection
-     */
-    public String execute() {
-
-    return "";
-    }
-
-    @Override
-    public String description() {
-        return "info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)";
-    }
-
-
+public class Info implements NoArgument {
+    @Serial
+    private static final long serialVersionUID = 589988003L;
     @Override
     public String name() {
         return "info";

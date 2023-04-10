@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * class Person,objects of this class are  elements of  @see {@link itmo.p3108.util.CollectionController}
@@ -23,7 +25,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Person {
+public class Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 498787001L;
     @XmlElement(name = "Id")
     private Long personId;
     @XmlElement(name = "name")

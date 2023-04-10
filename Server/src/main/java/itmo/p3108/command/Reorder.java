@@ -1,6 +1,6 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.NoArgumentCommand;
+import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.model.Person;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -8,6 +8,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Serial;
 import java.util.Comparator;
 
 /**
@@ -16,12 +17,13 @@ import java.util.Comparator;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Reorder implements NoArgumentCommand {
+public class Reorder implements NoArgument {
+    @Serial
+    private static final long serialVersionUID = 547248001L;
     private final static String SUCCESS = "Command reorder:collection reordered ";
     @Setter
     @NonNull
     private Comparator<Person> naturalComparatorOrder = Comparator.comparing(Person::getPersonId);
-    private boolean isReversed = false;
 
     /**
      * if collection has been already reversed,
@@ -30,13 +32,8 @@ public class Reorder implements NoArgumentCommand {
 
     @Override
     public String execute() {
-        if (!isReversed) {
-            controller.getPersonList().sort(naturalComparatorOrder.reversed());
-            isReversed = true;
-        } else {
-            controller.getPersonList().sort(naturalComparatorOrder);
-            isReversed = false;
-        }
+        naturalComparatorOrder = naturalComparatorOrder.reversed();
+        controller.getPersonList().sort(naturalComparatorOrder);
 
         return SUCCESS;
     }

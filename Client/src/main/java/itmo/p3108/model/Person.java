@@ -1,8 +1,6 @@
 package itmo.p3108.model;
 
 
-import itmo.p3108.adapter.LocalDateAdapter;
-import itmo.p3108.adapter.ZonedDateAdapter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,36 +10,27 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
- * class Person,objects of this class are  elements of  @see {@link itmo.p3108.util.CollectionController}
+ *
  */
 @Data
 @Builder
-@XmlRootElement(name = "person")
-@XmlAccessorType(XmlAccessType.FIELD)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Person {
-    @XmlElement(name = "Id")
+public class Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 498787001L;
     private Long personId;
-    @XmlElement(name = "name")
     private String personName;
-    @XmlElement(name = "coordinates")
     private Coordinates coordinates;
-    @XmlJavaTypeAdapter(ZonedDateAdapter.class)
-    @XmlElement(name = "creationDate")
     private java.time.ZonedDateTime personCreationDate;
     private Double personHeight;
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    @XmlElement(name = "birthday")
     private java.time.LocalDate personBirthday;
-    @XmlElement(name = "eyeColor")
     private Color personEyeColor;
-    @XmlElement(name = "nationality")
     private Country personNationality;
-    @XmlElement(name = "location")
     private Location location;
 
 

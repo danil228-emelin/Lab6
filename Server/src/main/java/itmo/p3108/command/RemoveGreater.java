@@ -1,15 +1,17 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.IndependentCommand;
-import itmo.p3108.command.type.NoArgumentCommand;
+import itmo.p3108.command.type.Command;
+import itmo.p3108.command.type.NoArgument;
+import itmo.p3108.command.type.OneArgument;
+import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.Person;
-import itmo.p3108.model.PersonReadingBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -23,41 +25,15 @@ import java.util.Comparator;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class RemoveGreater implements NoArgumentCommand, IndependentCommand {
+public class RemoveGreater implements OneArgument {
+    @Serial
+    private static final long serialVersionUID = 547268001L;
     private final static String SUCCESS = "command RemoveGreater deleted all suitable elements ";
     private final static String FAIL = "command RemoveGreater deleted nothing ";
     @Setter
     @NonNull
     private Comparator<Person> comparator = Comparator.comparing(Person::getPersonName).thenComparing(Person::getPersonBirthday);
-
-    /**
-     * @return result of command invocation
-     * no elements can be deleted
-     */
-    @Override
-    public String execute() {
-
-        PersonReadingBuilder personReadingBuilder = PersonReadingBuilder.getInstance();
-        Person person = Person
-                .builder()
-                .personName(personReadingBuilder.createName())
-                .personId(personReadingBuilder.createId())
-                .personHeight(personReadingBuilder.createHight())
-                .personEyeColor(personReadingBuilder.createColor())
-                .personNationality(personReadingBuilder.createNationality())
-                .personBirthday(personReadingBuilder.createBirthDay())
-                .coordinates(personReadingBuilder.createCoordinates())
-                .location(personReadingBuilder.createLocation())
-                .build();
-        ArrayList<Person> arrayList = controller.getPersonList();
-        Collection<Person> collection = arrayList.stream().filter(x -> comparator.compare(x, person) > 0).toList();
-
-        if (arrayList.removeAll(collection)) {
-            return SUCCESS;
-        }
-
-        return FAIL;
-    }
+    private Person person;
 
     @Override
     public String description() {
@@ -70,4 +46,25 @@ public class RemoveGreater implements NoArgumentCommand, IndependentCommand {
         return "remove_greater";
     }
 
+    @Override
+    public String execute(Object argument) {
+        if (argument instanceof Person person) {
+
+            ArrayList<Person> arrayList = controller.getPersonList();
+            Collection<Person> collection = arrayList.stream().filter(x -> comparator.compare(x, person) > 0).toList();
+
+            if (arrayList.removeAll(collection)) {
+                return SUCCESS;
+            }
+
+            return FAIL;
+
+        }
+        throw new ValidationException("Wrong Argument for RemoveGreater");
+    }
+
+    @Override
+    public Object getParameter() {
+        return person;
+    }
 }

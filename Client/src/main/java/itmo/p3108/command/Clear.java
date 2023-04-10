@@ -1,10 +1,11 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.NoArgumentCommand;
-import itmo.p3108.model.PersonReadingBuilder;
+import itmo.p3108.command.type.NoArgument;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.Serial;
 
 /**
  * Command Clear,clear collection
@@ -12,27 +13,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@SuppressWarnings("unused")
-public class Clear implements NoArgumentCommand {
-    private final static String SUCCESS = "Command Clear deleted elements ";
-
-    /**
-     * Command clear,clear collection  after execution size=0
-     */
-    @Override
-
-    public String execute() {
-        controller.getPersonList().clear();
-        PersonReadingBuilder.setId(1L);
-
-        return SUCCESS;
-    }
-
-    @Override
-    public String description() {
-        return "clear : очистить коллекцию";
-    }
-
+public class Clear implements NoArgument {
+    @Serial
+    private static final long serialVersionUID = 569988001L;
     @Override
     public String name() {
         return "clear";

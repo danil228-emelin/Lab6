@@ -1,10 +1,8 @@
 package itmo.p3108.util;
 
 import com.sun.istack.Nullable;
-import itmo.p3108.command.type.Command;
 import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.*;
-import itmo.p3108.util.annotation.Checking;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -12,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -43,12 +42,12 @@ public class CheckData {
     /**
      * @see Country
      */
-    @Checking
+
     public boolean checkPersonId(Long id) {
         return id != null && id > 0;
     }
 
-    @Checking
+
     public boolean checkCoordinates(Coordinates coordinates) {
         if (coordinates == null) {
             return false;
@@ -57,12 +56,12 @@ public class CheckData {
                 checkCoordinatesY(coordinates.getCoordinatesY().toString());
     }
 
-    @Checking
+
     public boolean checkPersonCreationDate(ZonedDateTime creationDate) {
         return creationDate != null;
     }
 
-    @Checking
+
     public boolean checkPersonHeight(Double height) {
         if (height == null) {
             return false;
@@ -70,22 +69,22 @@ public class CheckData {
         return checkPersonHeight(height.toString());
     }
 
-    @Checking
+
     public boolean checkPersonBirthday(LocalDate localDate) {
         return localDate != null;
     }
 
-    @Checking
+
     public boolean checkPersonEyeColor(Color color) {
         return color != null;
     }
 
-    @Checking
+
     public boolean checkPersonNationality(Country country) {
         return country != null;
     }
 
-    @Checking
+
     public boolean checkLocation(Location location) {
         if (location == null) {
             return false;
@@ -241,17 +240,9 @@ public class CheckData {
     public boolean checkPersonId(String test) {
         if (!test.matches(POSITIVE_NUMBER_FORMAT)) {
             log.error("error:id has wrong format");
-
-            System.err.println("error:id has wrong format \n id is natural number");
-            return false;
-
-        }
-        Long id = Long.parseLong(test);
-        if (Command.controller.isPersonExist(id)) {
-            log.error("error:id has wrong format");
-            System.err.printf("error:id has wrong format  person with %s  already exist\n", test);
             return false;
         }
+
         return true;
     }
 
@@ -302,7 +293,7 @@ public class CheckData {
         return checkPersonName(test);
     }
 
-    @Checking
+
     public boolean checkPersonName(String test) {
 
         if (test.length() > 40) {
@@ -340,18 +331,12 @@ public class CheckData {
         return false;
     }
 
-    /**
-     * helper method for @see {@link CheckData#checkArguments(Collection)}
-     * Methods, witch validate data,print errors in system.err.
-     * in order to suppress  message while checkArguments is executing
-     * helper method redirect error flow in nullOutputStream
-     * after execution it redirects error flow back
-     */
+
 
     public boolean wrapperCheckArguments(@NonNull Collection<String> collection) {
         PrintStream error = System.err;
         System.setErr(new PrintStream(OutputStream.nullOutputStream()));
-        boolean result = checkArguments(collection);
+        boolean result = checkArguments(collection,null);
         System.setErr(error);
         return result;
     }
@@ -361,9 +346,9 @@ public class CheckData {
      * it is implied that  @param collection has attributes of @see {@link itmo.p3108.model.Person}
      * Method checked whether all attributes have wright format
      */
-    private boolean checkArguments(@NonNull Collection<String> collection) {
+    private boolean checkArguments(@NonNull Collection<String> collection, Annotation annotation) {
 
-        Optional<Set<Method>> set = Reflection.findAllMethodsWithAnnotation("itmo.p3108.util", Checking.class);
+        Optional<Set<Method>> set = Reflection.findAllMethodsWithAnnotation("itmo.p3108.util", annotation.getClass());
         if (set.isEmpty()) {
             return false;
         }
@@ -392,9 +377,9 @@ public class CheckData {
         return true;
     }
 
-    public void checkPersonCollection(List<Person> personList) {
+    public void checkPersonCollection(List<Person> personList, Annotation annotation) {
         List<Person> removePerson = new ArrayList<>(personList.size());
-        Optional<Set<Method>> checkMethods = Reflection.findAllMethodsWithAnnotation("itmo.p3108.util", Checking.class);
+        Optional<Set<Method>> checkMethods = Reflection.findAllMethodsWithAnnotation("itmo.p3108.util", annotation.getClass());
         Field[] personFields = Reflection.findAllFields(Person.class);
         if (checkMethods.isEmpty()) {
             System.err.println("Error during checkPersonCollection:checkMethods are missed");

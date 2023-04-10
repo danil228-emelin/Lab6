@@ -3,20 +3,23 @@ package itmo.p3108.model;
 
 import com.sun.istack.Nullable;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
 
 /**
  * class Colour using as  @see {@link Person} eye's color
  */
-public enum Color {
+public enum Color implements Serializable {
     GREEN("1)green"),
     BLUE("2)blue"),
     YELLOW("3)yellow"),
     WHITE("4)white"),
     BROWN("5)brown");
     private final String name;
-
+    @Serial
+    private static final long serialVersionUID = 489988001L;
     Color(String name) {
         this.name = name;
     }

@@ -4,8 +4,8 @@ import itmo.p3108.util.WrapperArgument;
 
 import java.util.Optional;
 
-public interface Handler {
-    Optional<?> processRequest(WrapperArgument wrapperArgument);
+public interface Handler<T> {
+    Optional<T> processRequest(WrapperArgument wrapperArgument);
 
 
 }

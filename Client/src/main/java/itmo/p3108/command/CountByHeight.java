@@ -1,10 +1,14 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.Command;
+import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
+import itmo.p3108.util.CheckData;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.Serial;
 
 /**
  * Command CountByHeight,count elements with certain height,
@@ -13,25 +17,12 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class CountByHeight implements Command {
+public class CountByHeight implements OneArgument {
+    @Serial
+    private static final long serialVersionUID = 559988001L;
     private static final String VALIDATION_ERROR = "CountBtHeight error during setting height:height must be more than 0";
     private double height;
 
-    /**
-     * @return number of elements,who has certain hight
-     */
-    @Override
-    public String execute() {
-
-        return Long.toString(controller.getPersonList().stream().parallel().filter(x -> x.getPersonHeight() == height).count());
-    }
-
-    @Override
-    public String description() {
-        return
-                "count_by_height height:посчитать количество элементов с заданным возростом";
-
-    }
 
     @Override
     public String name() {
@@ -41,14 +32,11 @@ public class CountByHeight implements Command {
     /**
      * set height,call before execute method
      */
-    public CountByHeight setHeight(double height) {
-        if (height <= 0) {
-            log.error(VALIDATION_ERROR);
-
-            throw new ValidationException(VALIDATION_ERROR);
+    public void execute(@NonNull String height) {
+        boolean validation = new CheckData().checkPersonHeight(height);
+        if (!validation) {
+            throw new ValidationException("height isn't positive number");
         }
-
-        this.height = height;
-        return this;
+        this.height = Double.parseDouble(height);
     }
 }

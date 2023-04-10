@@ -1,11 +1,12 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.NoArgumentCommand;
+import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.model.Person;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Serial;
 import java.util.stream.Collectors;
 
 /**
@@ -14,9 +15,9 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@SuppressWarnings("unused")
-public class Show implements NoArgumentCommand {
-
+public class Show implements NoArgument {
+    @Serial
+    private static final long serialVersionUID = 547248021L;
     /**
      * @return show elements of collection
      * using to string method of elemenents

@@ -1,6 +1,7 @@
 package itmo.p3108.util;
 
 import itmo.p3108.command.type.Command;
+import itmo.p3108.command.type.OneArgument;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayOutputStream;
@@ -14,7 +15,7 @@ public class SerializeObject {
     }
 
 
-    public static <T extends Command> Optional<byte[]> serialize(T command,int port) {
+    public static <T extends Command> Optional<byte[]> serialize(T command, int port) {
         try {
             MessageServer messageServer = new MessageServer();
             messageServer.setCommand(command);

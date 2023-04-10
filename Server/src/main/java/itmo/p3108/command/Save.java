@@ -1,7 +1,7 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.IndependentCommand;
-import itmo.p3108.command.type.NoArgumentCommand;
+import itmo.p3108.command.type.Command;
+import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.parser.Parser;
 import itmo.p3108.util.FileValidator;
 import lombok.AccessLevel;
@@ -16,8 +16,7 @@ import java.io.FileNotFoundException;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@SuppressWarnings("unused")
-public class Save implements IndependentCommand, NoArgumentCommand {
+public class Save implements NoArgument, Command {
     /**
      * Saving collection by using class  @see {@link Parser}.
      * It parses collection xml format

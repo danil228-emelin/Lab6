@@ -1,6 +1,5 @@
 package itmo.p3108.util;
 
-import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.Person;
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,6 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  * CollectionController class.Contain Collection of elements.
@@ -56,15 +56,6 @@ public final class CollectionController {
     }
 
 
-    public Person getPersonById(Long id) {
-        for (Person person : personList) {
-            if (person.getPersonId().equals(id)) {
-                return person;
-            }
-        }
-        throw new ValidationException("error:person with such id doesn't  exist");
-    }
-
     public boolean isPersonExist(Long id) {
         for (Person person : personList) {
             if (person.getPersonId().equals(id)) {
@@ -72,5 +63,23 @@ public final class CollectionController {
             }
         }
         return false;
+    }
+
+    public boolean updatePerson(Person person) {
+        ListIterator<Person> iterator = personList.listIterator();
+        boolean isFound = false;
+        while (iterator.hasNext()) {
+            Person updatedPerson = iterator.next();
+            if (updatedPerson.getPersonId().compareTo(person.getPersonId()) == 0) {
+                isFound = true;
+                break;
+            }
+        }
+        if (!isFound) {
+            return false;
+        }
+        iterator.remove();
+        iterator.add(person);
+        return true;
     }
 }

@@ -1,10 +1,13 @@
 package itmo.p3108.command;
 
 import itmo.p3108.command.type.Command;
+import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.Serial;
 
 /**
  * Command RemoveByID,remove element with certain id,
@@ -12,15 +15,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class RemoveById implements Command {
+public class RemoveById implements  OneArgument {
+    @Serial
+    private static final long serialVersionUID = 547968001L;
     private Long id;
-
-    @Override
-    public String execute() {
-        controller.getPersonList().removeIf(x -> x.getPersonId().equals(id));
-
-        return "element with  id " + id + " was deleted ";
-    }
 
     @Override
     public String description() {
@@ -32,21 +30,28 @@ public class RemoveById implements Command {
         return "remove_by_id";
     }
 
-    /**
-     * set id
-     */
-    public RemoveById setId(Long id) {
-        if (id <= 0) {
-            log.error(" RemoveById error during setting id:id>0");
-            throw new ValidationException("error:id>0");
-        }
 
-        if (!controller.isPersonExist(id)) {
-            log.error(String.format(" RemoveById error :element with such %d doesn't exit", id));
+    @Override
+    public String execute(Object argument) {
+        if (argument instanceof Long id) {
+            if (id <= 0) {
+                log.error(" RemoveById error id<=0");
+                throw new ValidationException("RemoveById error id<=0");
+            }
 
-            throw new ValidationException("RemoveById error:person with such id doesn't exit");
+            if (!controller.isPersonExist(id)) {
+
+                return "RemoveById error:person with such id doesn't exit";
+            }
+            controller.getPersonList().removeIf(x -> x.getPersonId().equals(id));
+            return "element with  id " + id + " was deleted ";
+
         }
-        this.id = id;
-        return this;
+        throw new ValidationException("Wrong argument for RemoveById");
+    }
+
+    @Override
+    public Object getParameter() {
+        return id;
     }
 }

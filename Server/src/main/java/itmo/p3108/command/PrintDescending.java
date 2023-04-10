@@ -1,6 +1,6 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.NoArgumentCommand;
+import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.model.Person;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -8,6 +8,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Serial;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,9 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class PrintDescending implements NoArgumentCommand {
+public class PrintDescending implements NoArgument {
+    @Serial
+    private static final long serialVersionUID = 547998001L;
     @Setter
     @NonNull
     private Comparator<Person> naturalComparatorOrder = (Comparator.comparing(Person::getPersonId));
