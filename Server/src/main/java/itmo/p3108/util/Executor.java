@@ -15,10 +15,13 @@ public class Executor {
         serializedObject.ifPresentOrElse(x -> {
             Optional<?> command = DeserializeObject.deserializeObject(x);
             command.ifPresentOrElse(co -> {
+                int clientPort = 0;
                 if (co instanceof MessageServer messageServer) {
                     String result = messageServer.getCommand().execute();
+                    clientPort = messageServer.getPort();
                     udpSender.send(result, messageServer.getPort());
                 } else {
+
                     System.err.println("serializedObject isn't messageServer");
                 }
             }, () -> {

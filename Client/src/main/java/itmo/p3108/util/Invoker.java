@@ -37,28 +37,28 @@ public class Invoker {
      * analyzing for different conditions  and then try to invoke command
      */
     public Optional<Command> invoke(String commandStr) {
-
-        if (commandStr.equals("")) {
-            return Optional.empty();
-        }
-        String[] strings;
-        if (commandStr.contains("\"")) {
-            strings = commandStr.split("\"");
-            String s = strings[0];
-            strings[0] = s.trim().toLowerCase();
-        } else {
-            strings = commandStr.trim().split("\\s+");
-        }
-        if (!flyWeightCommandFactory.contains(strings[0])) {
-
-            throw new CommandException("Error during execution command doesn't exist,use help command");
-        }
-        Command command = flyWeightCommandFactory.getCommand(strings[0]).get();
-        WrapperArgument wrapperArgument = new WrapperArgument();
-        wrapperArgument.setArgument(strings);
-        wrapperArgument.setCommand(command);
-
         try {
+            if (commandStr.equals("")) {
+                return Optional.empty();
+            }
+            String[] strings;
+            if (commandStr.contains("\"")) {
+                strings = commandStr.split("\"");
+                String s = strings[0];
+                strings[0] = s.trim().toLowerCase();
+            } else {
+                strings = commandStr.trim().split("\\s+");
+            }
+            if (!flyWeightCommandFactory.contains(strings[0])) {
+
+                throw new CommandException("Error during execution command doesn't exist,use help command");
+            }
+            Command command = flyWeightCommandFactory.getCommand(strings[0]).get();
+            WrapperArgument wrapperArgument = new WrapperArgument();
+            wrapperArgument.setArgument(strings);
+            wrapperArgument.setCommand(command);
+
+
             return (Optional<Command>) handler.processRequest(wrapperArgument);
         } catch (NumberFormatException e) {
             log.error("Error during execution parameter must be a digit");

@@ -11,10 +11,7 @@ import java.util.Optional;
 public class LastHandler implements Handler {
     @Override
     public Optional<?> processRequest(WrapperArgument wrapperArgument) {
-        if (Command.controller.isEmpty()) {
-            log.error("Collection is empty");
-            throw new ValidationException("Collection is empty");
-        }
+
         return Optional.of(wrapperArgument.getCommand());
     }
 }

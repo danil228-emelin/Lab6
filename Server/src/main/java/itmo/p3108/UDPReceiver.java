@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public class UDPReceiver {
     private DatagramSocket socket;
-    private byte[] buf = new byte[1000];
+    private byte[] buf = new byte[10000];
 
     public UDPReceiver(int ServerPort) {
         try {
@@ -32,7 +32,6 @@ public class UDPReceiver {
             socket.receive(packet);
             return Optional.of(packet.getData());
         } catch (IOException exception) {
-            exception.printStackTrace();
             log.error(exception.getMessage());
             return Optional.empty();
         }

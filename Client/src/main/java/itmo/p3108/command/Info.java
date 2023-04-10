@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@SuppressWarnings("unused")
 public class Info implements NoArgumentCommand, IndependentCommand {
     @Override
 
@@ -21,8 +20,7 @@ public class Info implements NoArgumentCommand, IndependentCommand {
      */
     public String execute() {
 
-
-        return controller.info();
+    return "";
     }
 
     @Override

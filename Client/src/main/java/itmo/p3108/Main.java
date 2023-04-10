@@ -28,13 +28,15 @@ public class Main {
             Optional<Command> command = invoker.invoke(UserReader.read());
             command.ifPresentOrElse((x) -> {
                 Optional<byte[]> serializedObject = SerializeObject.serialize(x, udpReceiver.getAddress());
-                serializedObject.ifPresentOrElse(sender::send, () -> {
+                serializedObject.ifPresentOrElse(z -> {
+                    sender.send(z);
+                    System.out.println(udpReceiver.receive());
+                }, () -> {
                     System.err.println("Can't send serialized object,it is empty");
                 });
             }, () -> {
                 System.err.println("Can't send to server,command is empty");
             });
-            System.out.println(udpReceiver.receive());
         }
 
     }
