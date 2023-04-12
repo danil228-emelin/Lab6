@@ -3,7 +3,6 @@ package itmo.p3108.command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.Person;
-import itmo.p3108.model.PersonReadingBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

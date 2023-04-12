@@ -1,7 +1,6 @@
 package itmo.p3108.command;
 
 import itmo.p3108.command.type.NoArgument;
-import itmo.p3108.model.PersonReadingBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,6 @@ import java.io.Serial;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@SuppressWarnings("unused")
 public class Clear implements NoArgument {
     @Serial
     private static final long serialVersionUID = 569988001L;
@@ -27,8 +25,6 @@ public class Clear implements NoArgument {
 
     public String execute() {
         controller.getPersonList().clear();
-        PersonReadingBuilder.setId(1L);
-
         return SUCCESS;
     }
 

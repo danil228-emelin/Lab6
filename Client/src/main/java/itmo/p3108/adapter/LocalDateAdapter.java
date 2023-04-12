@@ -1,5 +1,7 @@
 package itmo.p3108.adapter;
 
+
+
 import lombok.extern.slf4j.Slf4j;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;

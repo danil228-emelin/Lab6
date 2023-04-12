@@ -1,6 +1,5 @@
 package itmo.p3108.model;
 
-import com.sun.istack.Nullable;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -20,7 +19,6 @@ public enum Country implements Serializable {
         name = s;
     }
 
-    @Nullable
     public static Optional<Country> newValue(String str) {
 
         for (Country country : Country.values()) {

@@ -1,9 +1,9 @@
 package itmo.p3108.chain;
 
+import itmo.p3108.command.Clear;
 import itmo.p3108.command.Exit;
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
-import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.CommandException;
 import itmo.p3108.exception.ValidationException;
 import itmo.p3108.util.WrapperArgument;
@@ -23,8 +23,8 @@ public class NoArgumentHandler implements Handler<Command> {
                 log.error("Error during execution command " + command.name() + " doesn't have arguments");
                 throw new CommandException("Error during execution command " + command.name() + " doesn't have arguments");
             }
-            if (command instanceof Exit) {
-                ((Exit) command).execute();
+            if (command instanceof Exit || command instanceof Clear) {
+                ((NoArgument) command).execute();
             }
             return Optional.of(wrapperArgument.getCommand());
 

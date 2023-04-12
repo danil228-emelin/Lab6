@@ -1,6 +1,5 @@
 package itmo.p3108.util;
 
-import com.sun.istack.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.ReflectionsException;
@@ -27,7 +26,6 @@ public class Reflection {
      * @param packageName source package
      * @return find all commands in certain package
      */
-    @Nullable
     public static Optional<Set<Class<?>>> findAllClasses(String packageName, Class<?> classExtended) {
         try {
 
@@ -40,7 +38,6 @@ public class Reflection {
         return Optional.empty();
     }
 
-    @Nullable
     public static Optional<Set<Class<?>>> findAllAnnotatedClasses(String packageName, Class<? extends Annotation> annotation) {
         try {
 
@@ -58,7 +55,6 @@ public class Reflection {
      * @param annotation         certain annotation to find
      * @return commands which has certain annotation
      */
-    @Nullable
     public static Optional<Set<Method>> findAllMethodsWithAnnotation(String pathToCheckedClass, Class<? extends Annotation> annotation) {
         try {
 

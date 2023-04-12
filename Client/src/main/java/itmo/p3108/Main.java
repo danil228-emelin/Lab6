@@ -3,10 +3,10 @@ package itmo.p3108;
 import itmo.p3108.command.type.Command;
 import itmo.p3108.util.Invoker;
 import itmo.p3108.util.SerializeObject;
+import itmo.p3108.util.ServerChanel;
 import itmo.p3108.util.UserReader;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -19,24 +19,18 @@ import java.util.Optional;
  */
 @Slf4j
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        UDPSender sender = new UDPSender(4445);
-        UDPReceiver udpReceiver = new UDPReceiver(8989);
+        ServerChanel serverChanel = new ServerChanel(8889, 4445);
         Invoker invoker = Invoker.getInstance();
         while (true) {
             Optional<Command> command = invoker.invoke(UserReader.read());
-            command.ifPresentOrElse((x) -> {
-                Optional<byte[]> serializedObject = SerializeObject.serialize(x, udpReceiver.getAddress());
+            command.ifPresentOrElse(x -> {
+                Optional<byte[]> serializedObject = SerializeObject.serialize(x, serverChanel.getAddress());
                 serializedObject.ifPresentOrElse(z -> {
-                    sender.send(z);
-                    System.out.println(udpReceiver.receive());
-                }, () -> {
-                    System.err.println("Can't send serialized object,it is empty");
-                });
-            }, () -> {
-                System.err.println("Can't send to server,command is empty");
-            });
+                    System.out.println(serverChanel.sendAndReceive());
+                }, () -> System.err.println("Can't send serialized object,it is empty"));
+            }, () -> System.err.println("Can't send to server,command is empty"));
         }
 
     }

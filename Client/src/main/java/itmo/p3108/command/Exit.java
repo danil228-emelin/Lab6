@@ -13,8 +13,7 @@ import java.io.Serializable;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Exit implements Command {
-
+public class Exit implements NoArgument {
     public void execute() {
         log.warn(" command didn't save collection before exit");
         System.exit(0);

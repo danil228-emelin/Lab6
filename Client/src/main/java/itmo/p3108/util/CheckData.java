@@ -1,6 +1,5 @@
 package itmo.p3108.util;
 
-import com.sun.istack.Nullable;
 import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.*;
 import lombok.AccessLevel;
@@ -320,7 +319,6 @@ public class CheckData {
         return result;
     }
 
-    @Nullable
     private boolean wrapperCheckArgument(@NonNull String argument, Method checkMethod) {
         try {
 
@@ -332,11 +330,10 @@ public class CheckData {
     }
 
 
-
     public boolean wrapperCheckArguments(@NonNull Collection<String> collection) {
         PrintStream error = System.err;
         System.setErr(new PrintStream(OutputStream.nullOutputStream()));
-        boolean result = checkArguments(collection,null);
+        boolean result = checkArguments(collection, null);
         System.setErr(error);
         return result;
     }

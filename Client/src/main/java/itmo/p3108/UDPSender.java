@@ -4,13 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.*;
+import java.nio.ByteBuffer;
 
 @Slf4j
 public class UDPSender {
     private DatagramSocket socket;
     private InetAddress address;
-    private int serverPort;
-    private byte[] buf;
+    private  int serverPort;
 
     public UDPSender(int serverPort) {
         try {
@@ -19,13 +19,14 @@ public class UDPSender {
             address = InetAddress.getByName("localhost");
         } catch (SocketException | UnknownHostException exception) {
             log.error(exception.getMessage());
+            System.exit(1);
         }
 
     }
 
     public void send(String msg) {
         try {
-            buf = msg.getBytes();
+            byte[] buf = msg.getBytes();
             DatagramPacket packet = new DatagramPacket(buf, buf.length, address, serverPort);
             socket.send(packet);
 
@@ -38,11 +39,11 @@ public class UDPSender {
 
     public void send(byte[] msg) {
         try {
-            buf = msg;
-            DatagramPacket packet = new DatagramPacket(buf, buf.length, address, serverPort);
+            ByteBuffer buffer = ByteBuffer.wrap(msg);
+            DatagramPacket packet = new DatagramPacket(buffer.array(), buffer.limit(), address, serverPort);
             socket.send(packet);
         } catch (IOException exception) {
-            exception.printStackTrace();
+            System.err.println("Can't send message to server");
             log.error(exception.getMessage());
         }
 

@@ -1,25 +1,28 @@
 package itmo.p3108;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.util.Optional;
 
 @Slf4j
 public class UDPReceiver {
-    private ByteBuffer buffer = ByteBuffer.allocate(100000);
+    private static final int CAPACITY = 100000;
+    private static final int AMOUNT_OF_TRY = 100;
+    private static  final int WAIT_REPLY_MILLISECONDS=10;
+    @Getter
+    private final ByteBuffer buffer = ByteBuffer.allocate(CAPACITY);
     private DatagramChannel channel;
-    private DatagramSocket socket;
     private InetSocketAddress address;
 
     public UDPReceiver(int clientPort) {
         try {
             address = new InetSocketAddress("localhost", clientPort);
             channel = DatagramChannel.open();
-            socket = channel.socket();
             channel.configureBlocking(false);
             channel.bind(address);
         } catch (IOException exception) {
@@ -28,31 +31,29 @@ public class UDPReceiver {
 
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
 
-    public String receive() {
-        String s = "";
-        while (true) {
-            InetSocketAddress receiver = null;
+    public Optional<InetSocketAddress> receive() {
+        int try_counter = 0;
+        InetSocketAddress receiver = null;
+        while (try_counter < AMOUNT_OF_TRY) {
             try {
                 receiver = (InetSocketAddress) channel.receive(buffer);
+                if (receiver == null) {
+                    try_counter = try_counter + 1;
+                    Thread.sleep(WAIT_REPLY_MILLISECONDS);
+                } else {
+                    break;
+                }
+            } catch (InterruptedException exception) {
+                log.error(exception.getMessage());
             } catch (IOException e) {
                 log.error(e.getMessage());
-            }
-            if (receiver != null) {
-                buffer.flip();
-                int limit = buffer.limit();
-                byte bytes[] = new byte[limit];
-                buffer.get(bytes, 0, limit);
-                s = new String(bytes);
-                buffer.clear();
-                return s;
+                return Optional.empty();
             }
         }
+        return Optional.ofNullable(receiver);
     }
+
 
     public int getAddress() {
         return address.getPort();

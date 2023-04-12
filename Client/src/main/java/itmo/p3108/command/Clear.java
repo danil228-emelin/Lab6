@@ -1,6 +1,7 @@
 package itmo.p3108.command;
 
 import itmo.p3108.command.type.NoArgument;
+import itmo.p3108.model.PersonReadingBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,5 +20,10 @@ public class Clear implements NoArgument {
     @Override
     public String name() {
         return "clear";
+    }
+
+    @Override
+    public void execute() {
+        PersonReadingBuilder.setId(1L);
     }
 }

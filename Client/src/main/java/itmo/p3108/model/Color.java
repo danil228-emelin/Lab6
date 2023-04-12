@@ -1,7 +1,6 @@
 package itmo.p3108.model;
 
 
-import com.sun.istack.Nullable;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -27,7 +26,6 @@ public enum Color implements Serializable {
         this.name = name;
     }
 
-    @Nullable
     public static Optional<Color> newValue(String str) {
         for (Color color : Color.values()) {
             if (color.getName().startsWith(str))
