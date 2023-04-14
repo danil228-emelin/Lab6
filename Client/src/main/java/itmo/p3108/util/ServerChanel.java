@@ -10,21 +10,33 @@ import java.util.Optional;
 
 @Slf4j
 public class ServerChanel {
+    private static int clientPort=-1;
     UDPReceiver udpReceiver;
     UDPSender udpSender;
     private ConnectionServerState state;
 
-    public ServerChanel(int clientPort, int serverPort) {
+    public ServerChanel(int serverPort) {
         this.state = new ConnectionServerState();
-        this.udpReceiver = new UDPReceiver(clientPort);
+        while (true) {
+            try {
+                clientPort = (int) (8000 + Math.random() * 2000);
+                this.udpReceiver = new UDPReceiver(clientPort);
+                break;
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
         this.udpSender = new UDPSender(serverPort);
+    }
+
+    public static int getAddress() {
+        return clientPort;
     }
 
     public String sendAndReceive() {
         while (true) {
             if (!state.isHasConnection()) {
                 try {
-                    System.out.println("Try to get reply for lost messages \n");
+                    System.out.println("Try to get reply for saved messages \n");
                     return state.processLostConnection(udpSender, udpReceiver);
                 } catch (FileException exception) {
                     log.error(exception.getMessage());
@@ -38,9 +50,7 @@ public class ServerChanel {
         }
     }
 
-    public int getAddress() {
-        return udpReceiver.getAddress();
+    public void setState(boolean connectionState) {
+        state.setHasConnection(connectionState);
     }
-
-
 }

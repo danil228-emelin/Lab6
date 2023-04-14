@@ -1,11 +1,13 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
+import java.util.Optional;
 
 /**
  * Command Help,put out information about commands
@@ -15,8 +17,15 @@ import java.io.Serial;
 public class Help implements NoArgument {
     @Serial
     private static final long serialVersionUID = 547988001L;
+
     @Override
     public String name() {
         return "help";
+    }
+
+    @Override
+    public Optional<Command> execute() {
+        return Optional.of(this);
+
     }
 }

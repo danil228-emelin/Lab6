@@ -1,5 +1,6 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
+import java.util.Optional;
 
 /**
  * Command FilterStartsWithName, print all elements,which name start with given argument.
@@ -25,8 +27,9 @@ public class FilterStartsWithName implements OneArgument {
     }
 
     @Override
-    public void execute(@NonNull String argument) {
+    public Optional<Command> execute(@NonNull String argument) {
         substring = argument;
+        return Optional.of(this);
     }
 
 

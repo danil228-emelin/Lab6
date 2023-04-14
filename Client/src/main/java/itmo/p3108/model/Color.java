@@ -1,6 +1,7 @@
 package itmo.p3108.model;
 
 
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.util.Optional;
 /**
  * class Colour using as  @see {@link Person} eye's color
  */
-
+@Slf4j
 public enum Color implements Serializable {
 
     GREEN("1)green"),
@@ -39,8 +40,15 @@ public enum Color implements Serializable {
      * @param test by id check whether enum constant exist or not
      */
     public static boolean isPresent(String test) {
+        try {
+            Integer.parseInt(test);
+
+        } catch (NumberFormatException exception) {
+            log.error("test is not a digit");
+            return false;
+        }
         for (Color color : Color.values()) {
-            if (color.getName().substring(2).equals(test.toLowerCase())) {
+            if (color.getName().contains(test)) {
 
                 return true;
             }

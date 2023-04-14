@@ -1,5 +1,6 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
 import itmo.p3108.util.CheckData;
@@ -9,6 +10,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
+import java.util.Optional;
 
 
 @Slf4j
@@ -25,11 +27,12 @@ public class RemoveById implements OneArgument {
 
 
     @Override
-    public void execute(@NonNull String id) {
+    public Optional<Command> execute(@NonNull String id) {
         boolean validation = new CheckData().checkPersonId(id);
         if (!validation) {
             throw new ValidationException("id isn't positive number");
         }
         this.id = Long.valueOf(id);
+        return Optional.of(this);
     }
 }

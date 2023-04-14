@@ -1,11 +1,13 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
+import java.util.Optional;
 
 /**
  * Command Print Descending, print in descending order
@@ -19,5 +21,10 @@ public class PrintDescending implements NoArgument {
     @Override
     public String name() {
         return "print_descending";
+    }
+
+    @Override
+    public Optional<Command> execute() {
+        return Optional.of(this);
     }
 }

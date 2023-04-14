@@ -22,10 +22,6 @@ public class Add implements OneArgument {
     private static final long serialVersionUID = 589988001L;
     private Person person;
 
-    /**
-     * @return result of execution
-     * {@link PersonReadingBuilder} is used to read and check information from  console
-     */
 
     @Override
     public String description() {

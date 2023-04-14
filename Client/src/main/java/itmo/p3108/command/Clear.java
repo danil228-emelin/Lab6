@@ -1,5 +1,6 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.model.PersonReadingBuilder;
 import lombok.AccessLevel;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
+import java.util.Optional;
 
 /**
  * Command Clear,clear collection
@@ -17,13 +19,15 @@ import java.io.Serial;
 public class Clear implements NoArgument {
     @Serial
     private static final long serialVersionUID = 569988001L;
+
     @Override
     public String name() {
         return "clear";
     }
 
     @Override
-    public void execute() {
+    public Optional<Command> execute() {
         PersonReadingBuilder.setId(1L);
+        return Optional.of(this);
     }
 }

@@ -1,5 +1,6 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
 import itmo.p3108.util.CheckData;
@@ -9,6 +10,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
+import java.util.Optional;
 
 /**
  * Command CountByHeight,count elements with certain height,
@@ -32,11 +34,12 @@ public class CountByHeight implements OneArgument {
     /**
      * set height,call before execute method
      */
-    public void execute(@NonNull String height) {
+    public Optional<Command> execute(@NonNull String height) {
         boolean validation = new CheckData().checkPersonHeight(height);
         if (!validation) {
             throw new ValidationException("height isn't positive number");
         }
         this.height = Double.parseDouble(height);
+    return Optional.of(this);
     }
 }

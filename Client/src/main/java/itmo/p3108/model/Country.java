@@ -1,6 +1,8 @@
 package itmo.p3108.model;
 
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -9,6 +11,7 @@ import java.util.Optional;
 /**
  * class Country using to describe current location of  @see {@link Person}
  */
+@Slf4j
 public enum Country implements Serializable {
     RUSSIA("1)russia"), FRANCE("2)france"), SPAIN("3)spain"), NORTH_KOREA("4)north_korea");
     @Serial
@@ -33,6 +36,7 @@ public enum Country implements Serializable {
      * @return all constants converted to String
      */
     public static String[] countries() {
+
         return Arrays.stream(Country.values()).map(Country::getName).toArray(String[]::new);
     }
 
@@ -40,9 +44,14 @@ public enum Country implements Serializable {
      * @param test by id check whether enum constant exist or not
      */
     public static boolean isPresent(String test) {
+        try {
+            Integer.parseInt(test);
+        } catch (NumberFormatException exception) {
+            log.error("test is not a digit");
+            return false;
+        }
         for (Country country : Country.values()) {
-            if (country.getName().substring(2).equals(test.toLowerCase())) {
-
+            if (country.getName().contains(test)) {
                 return true;
             }
 

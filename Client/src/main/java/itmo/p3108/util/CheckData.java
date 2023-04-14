@@ -1,6 +1,5 @@
 package itmo.p3108.util;
 
-import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -92,7 +91,9 @@ public class CheckData {
                 && checkLocationY(location.getLocationY().toString()) && checkLocationX(location.getLocationX().toString());
     }
 
-    public boolean checkPersonNationalityReadingFromFile(String test) {
+
+    @Checking
+    public boolean checkPersonNationalityNumber(String test) {
 
         if (!Country.isPresent(test)) {
             log.error("error:during nationality setting line has wrong format");
@@ -115,7 +116,8 @@ public class CheckData {
     /**
      * @see Color
      */
-    public boolean checkPersonEyeColorReadingFile(String test) {
+    @Checking
+    public boolean checkPersonEyeColorNumber(String test) {
         if (!Color.isPresent(test)) {
             log.error("error:during colour setting line has wrong format");
             System.err.println("error:during colour setting line has wrong format");
@@ -125,7 +127,7 @@ public class CheckData {
         return true;
     }
 
-
+    @Checking
     public boolean checkPersonBirthday(String test) {
         if (!test.matches(BIRTHDAY_FORMAT)) {
             log.error("error:during birthday setting line has wrong format");
@@ -169,6 +171,7 @@ public class CheckData {
         return true;
     }
 
+    @Checking
     public boolean checkCoordinatesX(String test) {
         if (!test.matches(INT_NUMBER_FORMAT)) {
             log.error("error:during coordinate x setting, wrong format");
@@ -185,6 +188,7 @@ public class CheckData {
         return true;
     }
 
+    @Checking
     public boolean checkCoordinatesY(String test) {
         if (!test.matches(FLOAT_NUMBER_FORMAT)) {
             log.error("error:during coordinate y setting");
@@ -201,6 +205,7 @@ public class CheckData {
         return true;
     }
 
+    @Checking
     public boolean checkLocationX(String test) {
         if (!test.matches(FLOAT_NUMBER_FORMAT)) {
             log.error("error:during location coordinate x setting,wrong format");
@@ -217,6 +222,7 @@ public class CheckData {
         return true;
     }
 
+    @Checking
     public boolean checkLocationY(String test) {
 
         if (!test.matches(FLOAT_NUMBER_FORMAT)) {
@@ -236,6 +242,7 @@ public class CheckData {
         return true;
     }
 
+    @Checking
     public boolean checkPersonId(String test) {
         if (!test.matches(POSITIVE_NUMBER_FORMAT)) {
             log.error("error:id has wrong format");
@@ -245,6 +252,7 @@ public class CheckData {
         return true;
     }
 
+    @Checking
     public boolean checkLocationZ(String test) {
 
         if (!test.matches(FLOAT_NUMBER_FORMAT)) {
@@ -262,6 +270,7 @@ public class CheckData {
         return true;
     }
 
+    @Checking
     public boolean checkPersonHeight(String test) {
         if (!test.matches(POSITIVE_FLOAT_NUMBER_FORMAT)) {
             log.error("error:during height setting");
@@ -278,6 +287,7 @@ public class CheckData {
         return true;
     }
 
+    @Checking
     public boolean checkPersonCreationDate(String test) {
 
         if (!test.matches(CREATION_TIME_FORMAT)) {
@@ -288,11 +298,12 @@ public class CheckData {
         return true;
     }
 
+    @Checking
     public boolean checkLocationName(String test) {
         return checkPersonName(test);
     }
 
-
+    @Checking
     public boolean checkPersonName(String test) {
 
         if (test.length() > 40) {
@@ -330,10 +341,11 @@ public class CheckData {
     }
 
 
-    public boolean wrapperCheckArguments(@NonNull Collection<String> collection) {
+    public <T extends Annotation> boolean wrapperCheckArguments(@NonNull String[] collection, Class<T> annotationClass, @NonNull String[] argumentOrder) {
+
         PrintStream error = System.err;
         System.setErr(new PrintStream(OutputStream.nullOutputStream()));
-        boolean result = checkArguments(collection, null);
+        boolean result = checkArguments(collection, annotationClass, argumentOrder);
         System.setErr(error);
         return result;
     }
@@ -343,36 +355,41 @@ public class CheckData {
      * it is implied that  @param collection has attributes of @see {@link itmo.p3108.model.Person}
      * Method checked whether all attributes have wright format
      */
-    private boolean checkArguments(@NonNull Collection<String> collection, Annotation annotation) {
+    private <T extends Annotation> boolean checkArguments(@NonNull String[] collection, Class<T> annotationClas, @NonNull String[] argumentOrder) {
 
-        Optional<Set<Method>> set = Reflection.findAllMethodsWithAnnotation("itmo.p3108.util", annotation.getClass());
+        Optional<Set<Method>> set = Reflection.findAllMethodsWithAnnotation("itmo.p3108.util", annotationClas);
         if (set.isEmpty()) {
+            log.error("validation methods are empty");
             return false;
         }
-        CheckData checkData = new CheckData();
-        boolean oneArgumentChecking = false;
-        for (String data : collection) {
-            for (Method methodChecking : set.get()) {
-                try {
+        if (collection.length != argumentOrder.length) {
+            log.error(String.format("collection length and argument order length are not equal,%d and %d", collection.length, argumentOrder.length));
+            return false;
+        }
 
-                    Object result = methodChecking.invoke(checkData, data);
-                    if (result instanceof Boolean resultChecking && resultChecking) {
-                        oneArgumentChecking = true;
-                        break;
-                    }
-                    if (oneArgumentChecking) {
-                        oneArgumentChecking = false;
-                    } else {
-                        throw new ValidationException("Error during checking:one attribute has wrong format");
-                    }
-                } catch (Exception exception) {
-                    log.error(exception.getMessage());
-                }
+        for (int i = 0; i < collection.length; i++) {
+            String data = collection[i];
+            String dataName = argumentOrder[i];
 
+            Optional<Method> checkMethod = set.get().stream().filter(x -> x.getName().toLowerCase().trim().contains(dataName.toLowerCase().trim())).findFirst();
+            if (checkMethod.isEmpty()) {
+                log.error(String.format("Can't find checkMethod for %s", dataName));
+                return false;
             }
+            try {
+                Object result = checkMethod.get().invoke(this, data.trim());
+                if (!(result instanceof Boolean resultChecking) || !resultChecking) {
+                    return false;
+                }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                log.error(e.getMessage());
+                return false;
+            }
+
         }
         return true;
     }
+
 
     public void checkPersonCollection(List<Person> personList, Annotation annotation) {
         List<Person> removePerson = new ArrayList<>(personList.size());

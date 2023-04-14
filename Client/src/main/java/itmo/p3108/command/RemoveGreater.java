@@ -1,5 +1,6 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.model.Person;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * Command Remove Greater,
@@ -25,8 +27,9 @@ public class RemoveGreater  implements OneArgument {
     private Person person;
 
     @Override
-    public void execute(String object) {
+    public Optional<Command> execute(String object) {
         this.person = CreatePerson.createPerson();
+        return Optional.of(this);
     }
 
     @Override

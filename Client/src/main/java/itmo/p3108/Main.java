@@ -21,16 +21,21 @@ import java.util.Optional;
 public class Main {
     public static void main(String[] args) {
 
-        ServerChanel serverChanel = new ServerChanel(8889, 4445);
+        ServerChanel serverChanel = new ServerChanel(4445);
         Invoker invoker = Invoker.getInstance();
         while (true) {
             Optional<Command> command = invoker.invoke(UserReader.read());
             command.ifPresentOrElse(x -> {
-                Optional<byte[]> serializedObject = SerializeObject.serialize(x, serverChanel.getAddress());
-                serializedObject.ifPresentOrElse(z -> {
-                    System.out.println(serverChanel.sendAndReceive());
-                }, () -> System.err.println("Can't send serialized object,it is empty"));
-            }, () -> System.err.println("Can't send to server,command is empty"));
+                        Optional<byte[]> serializedObject = SerializeObject.serialize(x);
+                        serializedObject.ifPresentOrElse(z -> {
+                            System.out.println(serverChanel.sendAndReceive());
+                        }, () -> System.err.println("Can't send serialized message,it is empty"));
+                    }, () -> {
+                        serverChanel.setState(false);
+                        System.out.println(serverChanel.sendAndReceive());
+
+                    }
+            );
         }
 
     }

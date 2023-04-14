@@ -4,13 +4,11 @@ import itmo.p3108.chain.Handler;
 import itmo.p3108.chain.OneArgumentHandler;
 import itmo.p3108.command.FlyWeightCommandFactory;
 import itmo.p3108.command.type.Command;
-import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.CommandException;
 import itmo.p3108.exception.FileException;
 import itmo.p3108.exception.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -18,7 +16,7 @@ import java.util.Optional;
  */
 @Slf4j
 public class Invoker {
-    private static final Handler HANDLER = new OneArgumentHandler();
+    private static final Handler<Command> HANDLER = new OneArgumentHandler();
     private static final Invoker INVOKER = new Invoker();
     private static final FlyWeightCommandFactory FLY_WEIGHT_COMMAND_FACTORY = FlyWeightCommandFactory.getInstance();
 
@@ -27,10 +25,6 @@ public class Invoker {
 
     public static Invoker getInstance() {
         return INVOKER;
-    }
-
-    public Collection<Command> commands() {
-        return FLY_WEIGHT_COMMAND_FACTORY.getValues();
     }
 
 
@@ -50,13 +44,13 @@ public class Invoker {
 
                 throw new CommandException("Error during execution command doesn't exist,use help command");
             }
+
             Command command = FLY_WEIGHT_COMMAND_FACTORY.getCommand(commandName).get();
             WrapperArgument wrapperArgument = new WrapperArgument();
             wrapperArgument.setArgument(strings);
             wrapperArgument.setCommand(command);
 
-
-            return  HANDLER.processRequest(wrapperArgument);
+            return HANDLER.processRequest(wrapperArgument);
         } catch (NumberFormatException e) {
             log.error("Error during execution parameter must be a digit");
             System.err.println("Error during execution parameter must be a digit ");

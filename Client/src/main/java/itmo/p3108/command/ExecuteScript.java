@@ -1,53 +1,77 @@
-/*
 package itmo.p3108.command;
 
 import itmo.p3108.command.type.Command;
+import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.FileException;
-import itmo.p3108.util.AnalyzerExecuteScript;
+import itmo.p3108.exception.ValidationException;
 import itmo.p3108.util.FileWorker;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.Serial;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
-*/
-/**
- * Command execute script.
- * Execute script. Has one argument (path) for script.
- * If fail doesn't exist or program can't read from -error occur
- *//*
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class ExecuteScript implements Command {
+public class ExecuteScript implements OneArgument {
     @Serial
     private static final long serialVersionUID = 549988001L;
-    private static final String ERROR_PERMISSION = "ExecuteScript error during setting path:can't read and write  file";
-    private String path;
-
-    */
-/**
-     * set path ,call before execute method
-     *//*
-
-    public void setPath(String path) {
-        Path test = Path.of(path);
-        if (!Files.isReadable(test) || !Files.isWritable(test)) {
-
-            throw new FileException(ERROR_PERMISSION);
-        }
-        this.path = path;
-    }
+    private static final String ERROR_PERMISSION = "ExecuteScript error during execute script:file  doesn't exist or unreadable";
+    private final Set<Path> EXECUTED_FAILS = new HashSet<>();
+    private final int MAXIMUM_FILES = 49;
+    private final int MAXIMUM_COMMANDS_IN_FILE = 15;
 
     @Override
     public String name() {
         return "execute_script";
     }
 
+    @Override
+    public Optional<Command> execute(@NonNull String argument) {
+        Path test;
+        try {
+            test = Path.of(argument);
 
+        } catch (InvalidPathException exception) {
+            throw new FileException("wrong file name");
+        }
+        if (!Files.exists(test) || !Files.isReadable(test)) {
+            throw new FileException(ERROR_PERMISSION);
+        }
+
+        try {
+            String[] commands = FileWorker.read(argument).split("\n");
+            if (commands.length > MAXIMUM_COMMANDS_IN_FILE) {
+                log.error(String.format("%s has disallowed amount of commands ", argument));
+                throw new ValidationException(String.format("%s has disallowed amount of commands ", argument));
+            }
+            if (EXECUTED_FAILS.size() > MAXIMUM_FILES) {
+                log.error(String.format("%s processed maximum filed already ", argument));
+                throw new ValidationException(String.format("%s processed maximum filed already ", argument));
+            }
+            if (EXECUTED_FAILS.contains(test)) {
+                log.error("Recursion is forbidden");
+                throw new ValidationException(String.format("Recursion is forbidden,file already executed %s", argument));
+
+            }
+            EXECUTED_FAILS.add(test);
+            AnalyzeExecuteScript.analyze(commands);
+
+        } catch (IOException exception) {
+            log.error(exception.getMessage());
+            System.err.println("File exception for script");
+        }
+
+        return Optional.empty();
+    }
 }
-*/
+

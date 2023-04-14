@@ -31,7 +31,6 @@ public class ConnectionServerState {
         byte[] lost_message;
         while (true) {
             lost_message = SerializeObject.peek();
-            int size = SerializeObject.size();
             if (lost_message == null) {
                 hasConnection = true;
                 return "All messages got reply";

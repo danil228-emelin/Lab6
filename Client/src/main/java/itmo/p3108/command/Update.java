@@ -1,5 +1,6 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.Person;
@@ -11,6 +12,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
+import java.util.Optional;
 
 /**
  * Command update,update  exist element
@@ -30,7 +32,7 @@ public class Update implements OneArgument {
     }
 
     @Override
-    public void execute(@NonNull String argument) {
+    public Optional<Command> execute(@NonNull String argument) {
         boolean validation = new CheckData().checkPersonId(argument);
         if (!validation) {
             throw new ValidationException("argument isn't a positive number");
@@ -39,5 +41,6 @@ public class Update implements OneArgument {
         person = CreatePerson.createPerson();
         person.setPersonId(id);
         PersonReadingBuilder.setId(PersonReadingBuilder.getId() - 1);
+        return Optional.of(this);
     }
 }

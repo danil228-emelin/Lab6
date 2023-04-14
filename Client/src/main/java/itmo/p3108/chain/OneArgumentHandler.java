@@ -17,21 +17,20 @@ public class OneArgumentHandler implements Handler<Command> {
     public Optional<Command> processRequest(WrapperArgument wrapperArgument) {
         Command command = wrapperArgument.getCommand();
         String[] commandLine = wrapperArgument.getArgument();
-        if (command instanceof OneArgument commandOne) {
+        if (command instanceof OneArgument oneArgument) {
             if (commandLine.length > 2) {
                 log.error("Error during execution command " + command.name() + " has one argument ");
                 throw new CommandException("Error during execution command " + command.name() + " has one argument ");
             }
             if (commandLine.length == 1) {
                 try {
-                    commandOne.execute(null);
+                    return oneArgument.execute(null);
                 } catch (NullPointerException exception) {
                     throw new ValidationException(String.format("%s must have one argument", command.name()));
                 }
             }
-            commandOne.execute(commandLine[1]);
+            return oneArgument.execute(commandLine[1]);
 
-            return Optional.of(command);
         }
         return HANDLER.processRequest(wrapperArgument);
     }
