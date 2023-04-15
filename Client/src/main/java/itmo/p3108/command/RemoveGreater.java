@@ -1,15 +1,13 @@
 package itmo.p3108.command;
 
 import itmo.p3108.command.type.Command;
-import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.command.type.OneArgument;
-import itmo.p3108.model.Person;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import itmo.p3108.model.Person;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -21,7 +19,7 @@ import java.util.Optional;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class RemoveGreater  implements OneArgument {
+public class RemoveGreater implements OneArgument {
     @Serial
     private static final long serialVersionUID = 547268001L;
     private Person person;

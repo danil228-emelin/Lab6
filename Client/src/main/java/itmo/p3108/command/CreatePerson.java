@@ -1,7 +1,7 @@
 package itmo.p3108.command;
 
+import itmo.p3108.PersonReadingBuilder;
 import itmo.p3108.model.Person;
-import itmo.p3108.model.PersonReadingBuilder;
 
 import java.time.ZonedDateTime;
 

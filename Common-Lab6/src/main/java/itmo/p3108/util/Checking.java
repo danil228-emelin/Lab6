@@ -1,4 +1,4 @@
-package itmo.p3108.util.annotation;
+package itmo.p3108.util;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

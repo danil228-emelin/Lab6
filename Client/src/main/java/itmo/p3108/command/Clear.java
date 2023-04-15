@@ -2,7 +2,7 @@ package itmo.p3108.command;
 
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
-import itmo.p3108.model.PersonReadingBuilder;
+import itmo.p3108.PersonReadingBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

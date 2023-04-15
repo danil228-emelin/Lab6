@@ -1,15 +1,13 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.Command;
-import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
-import itmo.p3108.model.Person;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import itmo.p3108.model.Person;
 
 import java.io.Serial;
 import java.util.ArrayList;

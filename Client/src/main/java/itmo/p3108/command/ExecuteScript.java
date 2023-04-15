@@ -40,8 +40,8 @@ public class ExecuteScript implements OneArgument {
         Path test;
         try {
             test = Path.of(argument);
-
         } catch (InvalidPathException exception) {
+            log.error(exception.getMessage());
             throw new FileException("Error during executing script:wrong file name");
         }
         if (!Files.exists(test) || !Files.isReadable(test)) {

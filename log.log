@@ -1,8 +1,2 @@
-2023-04-10 19:53:50,880 DEBUG o.r.Reflections [main] going to scan these urls: [file:/D:/IntelliJ%20IDEA%202022.2.3/Lab6/Client/target/classes/] 
-2023-04-10 19:53:50,965 INFO o.r.Reflections [main] Reflections took 81 ms to scan 1 urls, producing 5 keys and 19 values  
-2023-04-10 20:22:22,537 DEBUG o.r.Reflections [main] going to scan these urls: [file:/D:/IntelliJ%20IDEA%202022.2.3/Lab6/Client/target/classes/] 
-2023-04-10 20:22:22,661 INFO o.r.Reflections [main] Reflections took 120 ms to scan 1 urls, producing 5 keys and 19 values  
-2023-04-10 20:36:22,672 DEBUG o.r.Reflections [main] going to scan these urls: [file:/D:/IntelliJ%20IDEA%202022.2.3/Lab6/Client/target/classes/] 
-2023-04-10 20:36:22,774 INFO o.r.Reflections [main] Reflections took 99 ms to scan 1 urls, producing 5 keys and 19 values  
-2023-04-12 10:56:38,723 DEBUG o.r.Reflections [main] going to scan these urls: [file:/D:/IntelliJ%20IDEA%202022.2.3/Lab6/Client/target/classes/] 
-2023-04-12 10:56:38,873 INFO o.r.Reflections [main] Reflections took 148 ms to scan 1 urls, producing 5 keys and 19 values  
+2023-04-15 16:44:31,163 DEBUG o.r.Reflections [main] going to scan these urls: [file:/D:/IntelliJ%20IDEA%202022.2.3/Lab6/Client/target/classes/] 
+2023-04-15 16:44:31,259 INFO o.r.Reflections [main] Reflections took 93 ms to scan 1 urls, producing 5 keys and 21 values  

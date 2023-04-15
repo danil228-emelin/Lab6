@@ -1,18 +1,20 @@
-package itmo.p3108.model;
+package itmo.p3108;
 
 import itmo.p3108.adapter.LocalDateAdapter;
 import itmo.p3108.util.CheckData;
 import itmo.p3108.util.UserReader;
 import lombok.Getter;
+import itmo.p3108.model.Color;
+import itmo.p3108.model.Coordinates;
+import itmo.p3108.model.Country;
+import itmo.p3108.model.Location;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
-/**
- * Class PersonReadingBuilder created to build all @see {@link Person} attributes using console input
- */
+
 public final class PersonReadingBuilder {
     private static PersonReadingBuilder createPerson = new PersonReadingBuilder();
     @Getter

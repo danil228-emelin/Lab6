@@ -1,6 +1,7 @@
 package itmo.p3108.util;
 
-import itmo.p3108.model.*;
+import itmo.p3108.model.Color;
+import itmo.p3108.model.Country;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -9,16 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.Optional;
+import java.util.Set;
 
-/**
- * Class CheckData,check each attribute of @see {@link itmo.p3108.model.Person}
- */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class CheckData {
@@ -36,60 +32,6 @@ public class CheckData {
     private final String POSITIVE_FLOAT_NUMBER_FORMAT = "\\d+\\.?\\d*";
     @SuppressWarnings("all")
     private final String NAME_FORMAT = "(\\w+-?\\w*)";
-
-    /**
-     * @see Country
-     */
-
-    public boolean checkPersonId(Long id) {
-        return id != null && id > 0;
-    }
-
-
-    public boolean checkCoordinates(Coordinates coordinates) {
-        if (coordinates == null) {
-            return false;
-        }
-        return checkCoordinatesX(coordinates.getCoordinatesX().toString()) &&
-                checkCoordinatesY(coordinates.getCoordinatesY().toString());
-    }
-
-
-    public boolean checkPersonCreationDate(ZonedDateTime creationDate) {
-        return creationDate != null;
-    }
-
-
-    public boolean checkPersonHeight(Double height) {
-        if (height == null) {
-            return false;
-        }
-        return checkPersonHeight(height.toString());
-    }
-
-
-    public boolean checkPersonBirthday(LocalDate localDate) {
-        return localDate != null;
-    }
-
-
-    public boolean checkPersonEyeColor(Color color) {
-        return color != null;
-    }
-
-
-    public boolean checkPersonNationality(Country country) {
-        return country != null;
-    }
-
-
-    public boolean checkLocation(Location location) {
-        if (location == null) {
-            return false;
-        }
-        return checkLocationName(location.getLocationName()) && checkLocationZ(location.getLocationY().toString())
-                && checkLocationY(location.getLocationY().toString()) && checkLocationX(location.getLocationX().toString());
-    }
 
 
     @Checking
@@ -322,24 +264,6 @@ public class CheckData {
         return true;
     }
 
-    public boolean checkArgument(@NonNull String argument, Method checkMethod) {
-        PrintStream error = System.err;
-        System.setErr(new PrintStream(OutputStream.nullOutputStream()));
-        boolean result = wrapperCheckArgument(argument, checkMethod);
-        System.setErr(error);
-        return result;
-    }
-
-    private boolean wrapperCheckArgument(@NonNull String argument, Method checkMethod) {
-        try {
-
-            return (boolean) checkMethod.invoke(this, argument);
-        } catch (InvocationTargetException | IllegalAccessException exception) {
-            System.err.println("CheckMethod is incorrect");
-        }
-        return false;
-    }
-
 
     public <T extends Annotation> boolean wrapperCheckArguments(@NonNull String[] collection, Class<T> annotationClass, @NonNull String[] argumentOrder) {
 
@@ -351,10 +275,6 @@ public class CheckData {
     }
 
 
-    /**
-     * it is implied that  @param collection has attributes of @see {@link itmo.p3108.model.Person}
-     * Method checked whether all attributes have wright format
-     */
     private <T extends Annotation> boolean checkArguments(@NonNull String[] collection, Class<T> annotationClas, @NonNull String[] argumentOrder) {
 
         Optional<Set<Method>> set = Reflection.findAllMethodsWithAnnotation("itmo.p3108.util", annotationClas);
@@ -390,44 +310,5 @@ public class CheckData {
         return true;
     }
 
-
-    public void checkPersonCollection(List<Person> personList, Annotation annotation) {
-        List<Person> removePerson = new ArrayList<>(personList.size());
-        Optional<Set<Method>> checkMethods = Reflection.findAllMethodsWithAnnotation("itmo.p3108.util", annotation.getClass());
-        Field[] personFields = Reflection.findAllFields(Person.class);
-        if (checkMethods.isEmpty()) {
-            System.err.println("Error during checkPersonCollection:checkMethods are missed");
-            return;
-        }
-        Iterator<Person> iterator = personList.listIterator();
-        while (iterator.hasNext()) {
-            Person person = iterator.next();
-            for (Field personField : personFields) {
-                personField.setAccessible(true);
-                boolean validationResult = false;
-                for (Method checkMethod : checkMethods.get()) {
-                    if (checkMethod.getName().toLowerCase().contains(personField.getName().toLowerCase())) {
-                        try {
-                            validationResult = (boolean) checkMethod.invoke(this, personField.get(person));
-                            if (!validationResult) {
-                                removePerson.add(person);
-                            }
-                            break;
-
-                        } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
-                            log.error(e.getMessage());
-                            System.out.println(e.getMessage());
-                        }
-                    }
-                }
-                if (!validationResult) {
-                    break;
-                }
-            }
-        }
-        for (Person removedPerson : removePerson) {
-            personList.remove(removedPerson);
-        }
-    }
 
 }

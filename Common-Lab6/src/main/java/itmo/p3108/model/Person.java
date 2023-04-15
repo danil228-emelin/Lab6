@@ -16,9 +16,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serial;
 import java.io.Serializable;
 
-/**
- * class Person,objects of this class are  elements of  @see {@link itmo.p3108.util.CollectionController}
- */
+
 @Data
 @Builder
 @XmlRootElement(name = "person")

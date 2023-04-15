@@ -3,13 +3,13 @@ package itmo.p3108.command;
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
-import itmo.p3108.model.Person;
-import itmo.p3108.model.PersonReadingBuilder;
+import itmo.p3108.PersonReadingBuilder;
 import itmo.p3108.util.CheckData;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import itmo.p3108.model.Person;
 
 import java.io.Serial;
 import java.util.Optional;
