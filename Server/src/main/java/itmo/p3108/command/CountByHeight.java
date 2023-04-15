@@ -40,7 +40,10 @@ public class CountByHeight implements  OneArgument {
         }
         throw new ValidationException("Wrong argument for CountByHeight");
     }
-
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
     @Override
     public Object getParameter() {
         return height;

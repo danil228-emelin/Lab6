@@ -31,16 +31,15 @@ public class FileValidator {
             return false;
         }
         Path path = Paths.get(test);
-        if (Files.notExists(path)) {
-            return true;
+        if (!Files.exists(path)) {
+            return false;
         }
         if (Files.isWritable(path) && Files.isReadable(path))
             return true;
-        else {
-            log.error(String.format(PERMISSION_ERROR));
-            System.err.printf(PERMISSION_ERROR);
-            return false;
-        }
+
+        log.error(String.format(PERMISSION_ERROR));
+        System.err.println(PERMISSION_ERROR);
+        return false;
 
     }
 

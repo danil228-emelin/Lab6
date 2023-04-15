@@ -27,7 +27,10 @@ public class Clear implements NoArgument {
         controller.getPersonList().clear();
         return SUCCESS;
     }
-
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
     @Override
     public String description() {
         return "clear : очистить коллекцию";

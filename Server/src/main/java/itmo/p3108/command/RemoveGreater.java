@@ -45,7 +45,10 @@ public class RemoveGreater implements OneArgument {
     public String name() {
         return "remove_greater";
     }
-
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
     @Override
     public String execute(Object argument) {
         if (argument instanceof Person person) {

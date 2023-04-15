@@ -24,7 +24,10 @@ public class PrintDescending implements NoArgument {
     @Setter
     @NonNull
     private Comparator<Person> naturalComparatorOrder = (Comparator.comparing(Person::getPersonId));
-
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
     @Override
     public String execute() {
         Comparator<Person> reversed_comparator = naturalComparatorOrder.reversed();

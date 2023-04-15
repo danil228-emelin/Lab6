@@ -21,6 +21,10 @@ public class Update implements OneArgument {
     private static final long serialVersionUID = 547248024L;
     private Person person;
 
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
 
     @Override
     public String description() {

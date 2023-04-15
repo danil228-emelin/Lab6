@@ -12,7 +12,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Server-Lab6" />
-        <module name="Common" />
         <module name="Client-Lab6" />
       </profile>
     </annotationProcessing>

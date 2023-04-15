@@ -36,7 +36,10 @@ public class FilterStartsWithName implements  OneArgument {
     public String name() {
         return "filter_starts_with_name";
     }
-
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
     /**
      * set the argument
      */

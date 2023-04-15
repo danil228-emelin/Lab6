@@ -31,10 +31,6 @@ public class AddIfMax implements OneArgument{
 
     private Person person;
 
-    /**
-     * @return result of execution
-     * {@link PersonReadingBuilder} is used to read and check data  from console
-     */
 
     @Override
     public String description() {
@@ -44,6 +40,11 @@ public class AddIfMax implements OneArgument{
     @Override
     public String name() {
         return "add_if_max";
+    }
+
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
     }
 
 

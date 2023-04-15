@@ -24,7 +24,10 @@ public class Reorder implements NoArgument {
     @Setter
     @NonNull
     private Comparator<Person> naturalComparatorOrder = Comparator.comparing(Person::getPersonId);
-
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
     /**
      * if collection has been already reversed,
      * using natural order to return to initial order

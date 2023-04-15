@@ -35,6 +35,11 @@ public class Add implements OneArgument {
     }
 
     @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
+
+    @Override
     public String execute(Object argument) {
         if (argument instanceof Person person) {
             controller.getPersonList().add(person);

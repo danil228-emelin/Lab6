@@ -14,4 +14,5 @@ public interface Command extends Serializable {
     String description();
 
     String name();
+    Class<?> getCommandClass();
 }

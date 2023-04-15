@@ -29,7 +29,10 @@ public class Help implements NoArgument {
                 .map(Command::description)
                 .collect(Collectors.joining("\n"));
     }
-
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
     @Override
     public String description() {
         return "help : вывести справку по доступным командам";

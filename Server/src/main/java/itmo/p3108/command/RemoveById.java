@@ -30,7 +30,10 @@ public class RemoveById implements  OneArgument {
         return "remove_by_id";
     }
 
-
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
     @Override
     public String execute(Object argument) {
         if (argument instanceof Long id) {

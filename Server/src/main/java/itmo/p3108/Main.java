@@ -1,12 +1,13 @@
 package itmo.p3108;
 
+import itmo.p3108.command.Save;
 import itmo.p3108.parser.Parser;
 import itmo.p3108.util.CollectionController;
 import itmo.p3108.util.Executor;
 import itmo.p3108.util.FileValidator;
+import itmo.p3108.util.ShutDownThread;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -19,7 +20,9 @@ import java.util.Optional;
  */
 @Slf4j
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        Save save = new Save();
+        ShutDownThread.createAndAdd(save::execute);
         FileValidator fileValidator = new FileValidator();
         String path = fileValidator.findFile();
         Optional<CollectionController> optionalCollectionController = Parser.read(path);

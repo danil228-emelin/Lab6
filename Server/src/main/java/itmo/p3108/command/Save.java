@@ -23,7 +23,10 @@ public class Save implements NoArgument, Command {
      */
     private final static String SUCCESS = "Command save:collection is saved";
     private final static String FAIL_ERROR = "Error during saving elements";
-
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
     @Override
     public String execute() {
         try {

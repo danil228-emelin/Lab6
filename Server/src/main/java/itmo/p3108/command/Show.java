@@ -29,7 +29,10 @@ public class Show implements NoArgument {
                 .map(Person::toString)
                 .collect(Collectors.joining("\n"));
     }
-
+    @Override
+    public Class<?> getCommandClass() {
+        return this.getClass();
+    }
     @Override
     public String description() {
         return "show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении";
