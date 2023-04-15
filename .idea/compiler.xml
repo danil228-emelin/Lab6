@@ -4,6 +4,7 @@
     <excludeFromCompile>
       <directory url="file://$PROJECT_DIR$/Client/src/main/resources/archetype-resources" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/Server/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/Common-Lab6/src/main/resources/archetype-resources" includeSubdirectories="true" />
     </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
@@ -12,12 +13,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Server-Lab6" />
+        <module name="Common-Lab6" />
         <module name="Client-Lab6" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Client-Lab6" target="17" />
       <module name="Common" target="1.5" />
+      <module name="Common-Lab6" target="17" />
       <module name="Lab6" target="17" />
       <module name="Server-Lab6" target="17" />
     </bytecodeTargetLevel>

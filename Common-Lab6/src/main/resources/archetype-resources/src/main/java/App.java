@@ -1,4 +1,4 @@
-package $itmo.p3108L;
+package $itmo.p3108;
 
 /**
  * Hello world!
