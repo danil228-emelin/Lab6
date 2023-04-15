@@ -23,6 +23,7 @@ public class Help implements NoArgument {
      */
     @Override
     public String execute() {
+        log.info(String.format("%s executed successfully", this.name()));
 
         return FlyWeightCommandFactory.getInstance().getValues()
                 .stream()

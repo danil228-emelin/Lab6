@@ -30,6 +30,7 @@ public class PrintDescending implements NoArgument {
     }
     @Override
     public String execute() {
+        log.info(String.format("%s executed successfully", this.name()));
         Comparator<Person> reversed_comparator = naturalComparatorOrder.reversed();
         return controller
                 .getPersonList()

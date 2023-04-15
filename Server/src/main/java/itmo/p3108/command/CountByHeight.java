@@ -1,6 +1,5 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
 import lombok.AccessLevel;
@@ -16,7 +15,7 @@ import java.io.Serial;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class CountByHeight implements  OneArgument {
+public class CountByHeight implements OneArgument {
     @Serial
     private static final long serialVersionUID = 559988001L;
     private double height;
@@ -36,14 +35,19 @@ public class CountByHeight implements  OneArgument {
     @Override
     public String execute(Object argument) {
         if (argument instanceof Double height) {
+            log.info(String.format("%s executed successfully", this.name()));
+
             return Long.toString(controller.getPersonList().stream().parallel().filter(x -> x.getPersonHeight().compareTo(height) == 0).count());
         }
+        log.error(String.format("%s Wrong argument", this.name()));
         throw new ValidationException("Wrong argument for CountByHeight");
     }
+
     @Override
     public Class<?> getCommandClass() {
         return this.getClass();
     }
+
     @Override
     public Object getParameter() {
         return height;

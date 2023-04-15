@@ -34,8 +34,8 @@ public class Reflection {
 
         } catch (ReflectionsException exception) {
             System.err.println(exception.getMessage());
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 
     public static Optional<Set<Class<?>>> findAllAnnotatedClasses(String packageName, Class<? extends Annotation> annotation) {

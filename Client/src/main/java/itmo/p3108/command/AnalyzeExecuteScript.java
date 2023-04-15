@@ -51,6 +51,8 @@ public class AnalyzeExecuteScript {
                 log.error(ADD_EXECUTE_SCRIPT_EXCEPTION1);
                 log.error(Arrays.toString(ADD_PROPER_ARGUMENTS_ORDER));
                 System.err.println(ADD_EXECUTE_SCRIPT_EXCEPTION1);
+                System.err.println(Arrays.toString(ADD_PROPER_ARGUMENTS_ORDER));
+
                 commadcounter++;
                 continue;
             }

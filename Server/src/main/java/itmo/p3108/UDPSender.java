@@ -20,8 +20,8 @@ public class UDPSender {
         try {
             channel = DatagramChannel.open();
             channel.bind(null);
-
             channel.configureBlocking(false);
+            log.error("Create DataGramChannel to send messages");
         } catch (IOException exception) {
             log.error(exception.getMessage());
         }
@@ -36,6 +36,7 @@ public class UDPSender {
             InetSocketAddress serverAddress = FlyweightClientSocket.getClientSocket(Integer.toString(clientPort));
             channel.send(buffer, serverAddress);
             buffer.flip();
+            log.info("send message back for client "+clientPort);
         } catch (IOException exception) {
             log.error(exception.getMessage());
         }

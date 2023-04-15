@@ -31,6 +31,7 @@ public class Save implements NoArgument, Command {
     public String execute() {
         try {
             Parser.write(new FileValidator().getPath());
+            log.info(String.format("%s executed successfully", this.name()));
             return SUCCESS;
         } catch (JAXBException | FileNotFoundException e) {
             log.error(e.getMessage());

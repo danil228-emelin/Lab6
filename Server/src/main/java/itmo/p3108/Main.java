@@ -29,9 +29,9 @@ public class Main {
         optionalCollectionController.ifPresent(CollectionController::setController);
 
         UDPSender udpSender = new UDPSender();
-        UDPReceiver receiver = new UDPReceiver(4445);
+        UDPReceiver udpReceiver = new UDPReceiver(4445);
         while (true) {
-            Executor.executeCommand(udpSender, receiver);
+            Executor.executeCommand(udpSender, udpReceiver);
         }
 
     }

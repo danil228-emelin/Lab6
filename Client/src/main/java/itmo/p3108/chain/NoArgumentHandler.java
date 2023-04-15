@@ -1,12 +1,9 @@
 package itmo.p3108.chain;
 
-import itmo.p3108.command.Clear;
-import itmo.p3108.command.Exit;
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.exception.CommandException;
 import itmo.p3108.exception.ValidationException;
-import itmo.p3108.util.WrapperArgument;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;

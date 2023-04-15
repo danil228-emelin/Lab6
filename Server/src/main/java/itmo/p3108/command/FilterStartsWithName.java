@@ -47,6 +47,7 @@ public class FilterStartsWithName implements  OneArgument {
     @Override
     public String execute(Object argument) {
         if (argument instanceof String s) {
+            log.info(String.format("%s executed successfully", this.name()));
             return
                     controller
                             .getPersonList()
@@ -56,6 +57,8 @@ public class FilterStartsWithName implements  OneArgument {
                             .map(Person::toString)
                             .collect(Collectors.joining("\n"));
         }
+        log.info(String.format("%s Wrong argument", this.name()));
+
         throw new ValidationException("Wrong argument for FilterStartsWithName");
     }
 

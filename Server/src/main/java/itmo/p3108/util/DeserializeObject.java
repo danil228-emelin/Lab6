@@ -17,6 +17,7 @@ public class DeserializeObject {
             ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(serializedObject));
             Object object = in.readObject();
             in.close();
+            log.info("message deserialized");
             return Optional.of(object);
         } catch (IOException | ClassNotFoundException exception) {
             log.error(exception.getMessage());

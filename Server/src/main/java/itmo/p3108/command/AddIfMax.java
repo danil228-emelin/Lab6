@@ -53,6 +53,7 @@ public class AddIfMax implements OneArgument{
         if (argument instanceof Person person) {
             if (controller.getPersonList().size() == 0) {
                 controller.getPersonList().add(person);
+                log.info(String.format("%s executed successfully", this.name()));
 
                 return SUCCESS;
             }
@@ -62,12 +63,16 @@ public class AddIfMax implements OneArgument{
                             .stream().parallel().max(comparator);
             if (other.isPresent() && comparator.compare(person, other.get()) > 0) {
                 controller.getPersonList().add(person);
+                log.info(String.format("%s executed successfully", this.name()));
 
                 return SUCCESS;
             }
+            log.info(String.format("%s executed unsuccessfully", this.name()));
 
             return FAIL;
         }
+        log.error(String.format("%s wrong argument", this.name()));
+
         throw new ValidationException("Wrong argument for AddIfMax");
     }
 

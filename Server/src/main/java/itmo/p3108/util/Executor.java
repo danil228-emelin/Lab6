@@ -34,6 +34,7 @@ public class Executor {
                     udpSender.send(result, messageServer.getPort());
                 } else {
 
+
                     System.err.println("serializedObject isn't messageServer");
                 }
             }, () -> {

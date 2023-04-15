@@ -25,6 +25,8 @@ public class Show implements NoArgument {
     @Override
     public String execute() {
 
+        log.info(String.format("%s executed successfully", this.name()));
+
         return controller.getPersonList().stream()
                 .map(Person::toString)
                 .collect(Collectors.joining("\n"));

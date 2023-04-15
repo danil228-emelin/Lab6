@@ -41,11 +41,17 @@ public class Update implements OneArgument {
         if (argument instanceof Person person1) {
             boolean updated = controller.updatePerson(person1);
             if (!updated) {
+                log.error(String.format("%s Person with %d doesn't exist", this.name(),person1.getPersonId()));
+
                 throw new ValidationException(String.format("Person with %d doesn't exist", person1.getPersonId()));
             }
+            log.info(String.format("%s executed successfully", this.name()));
+
             return String.format("Person with %d updated", person1.getPersonId());
 
         }
+        log.info(String.format("%s wrong argument", this.name()));
+
         throw new ValidationException("argument for Update must be type Person");
 
     }

@@ -42,7 +42,7 @@ public class ExecuteScript implements OneArgument {
             test = Path.of(argument);
 
         } catch (InvalidPathException exception) {
-            throw new FileException("wrong file name");
+            throw new FileException("Error during executing script:wrong file name");
         }
         if (!Files.exists(test) || !Files.isReadable(test)) {
             throw new FileException(ERROR_PERMISSION);
@@ -51,16 +51,18 @@ public class ExecuteScript implements OneArgument {
         try {
             String[] commands = FileWorker.read(argument).split("\n");
             if (commands.length > MAXIMUM_COMMANDS_IN_FILE) {
-                log.error(String.format("%s has disallowed amount of commands ", argument));
-                throw new ValidationException(String.format("%s has disallowed amount of commands ", argument));
+                log.error(String.format("Error during executing script:%s has disallowed amount of commands ", argument));
+
+                throw new ValidationException(String.format("Error during executing script:%s has disallowed amount of commands ", argument));
+
             }
             if (EXECUTED_FAILS.size() > MAXIMUM_FILES) {
-                log.error(String.format("%s processed maximum filed already ", argument));
-                throw new ValidationException(String.format("%s processed maximum filed already ", argument));
+                log.error(String.format("Error during executing script:%s processed maximum filed already ", argument));
+                throw new ValidationException(String.format("Error during executing script:%s processed maximum filed already ", argument));
             }
             if (EXECUTED_FAILS.contains(test)) {
                 log.error("Recursion is forbidden");
-                throw new ValidationException(String.format("Recursion is forbidden,file already executed %s", argument));
+                throw new ValidationException(String.format("Error during executing script:Recursion is forbidden,file already executed %s", argument));
 
             }
             EXECUTED_FAILS.add(test);
@@ -68,7 +70,7 @@ public class ExecuteScript implements OneArgument {
 
         } catch (IOException exception) {
             log.error(exception.getMessage());
-            System.err.println("File exception for script");
+            System.err.println("Error during executing script:File is wrong");
         }
 
         return Optional.empty();

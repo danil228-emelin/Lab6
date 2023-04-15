@@ -43,13 +43,18 @@ public class RemoveById implements  OneArgument {
             }
 
             if (!controller.isPersonExist(id)) {
+                log.info(String.format("%s person with  id %d doesn't exit", this.name(),id));
 
                 return "RemoveById error:person with such id doesn't exit";
             }
             controller.getPersonList().removeIf(x -> x.getPersonId().equals(id));
+            log.info(String.format("%s person with  id %d deleted", this.name(),id));
+
             return "element with  id " + id + " was deleted ";
 
         }
+        log.error(String.format("%s Wrong argument", this.name()));
+
         throw new ValidationException("Wrong argument for RemoveById");
     }
 

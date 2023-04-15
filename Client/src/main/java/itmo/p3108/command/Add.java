@@ -1,7 +1,6 @@
 package itmo.p3108.command;
 
 import itmo.p3108.command.type.Command;
-import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.Person;
@@ -12,7 +11,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -20,8 +18,6 @@ import java.util.Optional;
  * <p>
  * User enters data,but  while script executing Add take arguments from script file
  * Next line is treated as arguments
- *
- *
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -38,9 +34,8 @@ public class Add implements OneArgument {
             throw new ValidationException("Add doesn't have argument");
         }
         person = CreatePerson.createPerson();
-   return Optional.of(this);
+        return Optional.of(this);
     }
-
 
 
     @Override

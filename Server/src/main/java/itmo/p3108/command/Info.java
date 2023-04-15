@@ -23,6 +23,8 @@ public class Info implements NoArgument {
      * put out major information of collection
      */
     public String execute() {
+        log.info(String.format("%s executed successfully", this.name()));
+
         return controller.info();
     }
     @Override

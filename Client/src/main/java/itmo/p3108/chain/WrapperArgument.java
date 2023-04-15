@@ -1,4 +1,4 @@
-package itmo.p3108.util;
+package itmo.p3108.chain;
 
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;

@@ -2,16 +2,15 @@ package itmo.p3108;
 
 import itmo.p3108.exception.FileException;
 import itmo.p3108.util.SerializeObject;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.util.Optional;
 
+@Data
 public class ConnectionServerState {
-    @Setter
-    @Getter
+
     private boolean hasConnection = true;
 
     public Optional<String> processNormalConnection(UDPSender udpSender, UDPReceiver udpReceiver) {
@@ -41,7 +40,7 @@ public class ConnectionServerState {
                 System.out.println(createMessage(udpReceiver.getBuffer()) + "\n");
                 SerializeObject.remove();
             } else {
-                throw new FileException("Connection with Server  lost");
+                throw new FileException("Connection with Server lost");
 
             }
         }

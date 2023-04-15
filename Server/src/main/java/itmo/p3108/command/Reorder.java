@@ -37,6 +37,7 @@ public class Reorder implements NoArgument {
     public String execute() {
         naturalComparatorOrder = naturalComparatorOrder.reversed();
         controller.getPersonList().sort(naturalComparatorOrder);
+        log.info(String.format("%s executed successfully", this.name()));
 
         return SUCCESS;
     }

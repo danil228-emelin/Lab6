@@ -39,6 +39,7 @@ public final class Parser {
             JAXBContext contextObj = JAXBContext.newInstance(CollectionController.class);
             Unmarshaller ums = contextObj.createUnmarshaller();
             CollectionController controller = (CollectionController) ums.unmarshal(file);
+           log.info("Deparse collection");
             return Optional.of(controller);
         } catch (JAXBException e) {
             log.error(e.getMessage());
@@ -62,6 +63,7 @@ public final class Parser {
         marshallerObj.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
         marshallerObj.marshal(controller, new FileOutputStream(path));
+        log.info("Parse collection");
 
 
     }

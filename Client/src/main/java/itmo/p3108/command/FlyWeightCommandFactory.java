@@ -38,6 +38,7 @@ public class FlyWeightCommandFactory {
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException |
                      InstantiationException exception) {
                 log.error(exception.getMessage());
+
             }
         }
     }

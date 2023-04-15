@@ -1,10 +1,8 @@
 package itmo.p3108.util;
 
-import itmo.p3108.command.FlyWeightCommandFactory;
-import itmo.p3108.command.type.Command;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.Optional;
-
+@Slf4j
 public class ShutDownThread {
     private ShutDownThread() {
 
@@ -17,6 +15,7 @@ public class ShutDownThread {
     public static void createAndAdd(Runnable runnable) {
         Thread thread = new Thread(runnable);
         add(thread);
+        log.info("+1 thread executed after main");
     }
 
 }

@@ -2,6 +2,7 @@ package itmo.p3108.util;
 
 import itmo.p3108.chain.Handler;
 import itmo.p3108.chain.OneArgumentHandler;
+import itmo.p3108.chain.WrapperArgument;
 import itmo.p3108.command.FlyWeightCommandFactory;
 import itmo.p3108.command.type.Command;
 import itmo.p3108.exception.CommandException;
@@ -49,7 +50,7 @@ public class Invoker {
             WrapperArgument wrapperArgument = new WrapperArgument();
             wrapperArgument.setArgument(strings);
             wrapperArgument.setCommand(command);
-
+            log.info(String.format("try to execute %s", command.name()));
             return HANDLER.processRequest(wrapperArgument);
         } catch (NumberFormatException e) {
             log.error("Error during execution parameter must be a digit");

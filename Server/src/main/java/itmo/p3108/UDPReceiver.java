@@ -18,9 +18,11 @@ public class UDPReceiver {
 
     public UDPReceiver(int ServerPort) {
         try {
+            log.info("Create  DatagramSocket to receive messages");
             socket = new DatagramSocket(ServerPort);
         } catch (SocketException e) {
             log.error(e.getMessage());
+            System.exit(1);
         }
     }
 
@@ -30,6 +32,7 @@ public class UDPReceiver {
             packet = new DatagramPacket(buf, buf.length);
             socket.setSoTimeout(0);
             socket.receive(packet);
+           log.info("receive message");
             return Optional.of(packet.getData());
         } catch (IOException exception) {
             log.error(exception.getMessage());

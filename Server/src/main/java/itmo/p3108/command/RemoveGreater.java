@@ -57,12 +57,16 @@ public class RemoveGreater implements OneArgument {
             Collection<Person> collection = arrayList.stream().filter(x -> comparator.compare(x, person) > 0).toList();
 
             if (arrayList.removeAll(collection)) {
+                log.info(String.format("%s executed successfully", this.name()));
                 return SUCCESS;
             }
+            log.info(String.format("%s executed unsuccessfully", this.name()));
 
             return FAIL;
 
         }
+        log.info(String.format("%s Wrong Argument", this.name()));
+
         throw new ValidationException("Wrong Argument for RemoveGreater");
     }
 

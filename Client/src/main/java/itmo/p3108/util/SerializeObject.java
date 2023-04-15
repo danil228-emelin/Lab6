@@ -24,7 +24,7 @@ public class SerializeObject {
             objectOutputStream.flush();
             byte[] byteMessage = byteArrayOutputStream.toByteArray();
             if (byteMessage.length != 0) {
-                log.info(String.format("Add Message %s", Arrays.toString(byteMessage)));
+                log.info(String.format("Add Message with %s", messageServer.getCommand().name()));
                 MESSAGE.add(byteMessage);
             }
             return true;
@@ -43,6 +43,7 @@ public class SerializeObject {
             messageServer.setPort(ServerChanel.getAddress());
             boolean result = createMessage(messageServer, byteArrayOutputStream);
             if (result) {
+                log.info(String.format("serialize command %s", messageServer.getCommand().name()));
                 return Optional.of(byteArrayOutputStream.toByteArray());
             }
             return Optional.empty();

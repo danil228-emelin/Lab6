@@ -43,8 +43,10 @@ public class Add implements OneArgument {
     public String execute(Object argument) {
         if (argument instanceof Person person) {
             controller.getPersonList().add(person);
+            log.info(String.format("%s executed successfully", this.name()));
             return "object added ";
         }
+        log.error("Wrong argument for Add");
         throw new ValidationException("Wrong argument for Add");
     }
 

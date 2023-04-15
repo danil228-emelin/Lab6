@@ -27,7 +27,6 @@ public class FileValidator {
     private boolean fileCheck(String test) {
         if (!test.matches(FILE_NAME_FORMAT)) {
             log.error(FAIL_NAME_ERROR);
-            System.err.println(FILE_NAME_FORMAT);
             return false;
         }
         Path path = Paths.get(test);
@@ -38,7 +37,6 @@ public class FileValidator {
             return true;
 
         log.error(String.format(PERMISSION_ERROR));
-        System.err.println(PERMISSION_ERROR);
         return false;
 
     }
@@ -54,7 +52,6 @@ public class FileValidator {
             String test = UserReader.read();
             if (!test.matches(FILE_NAME_FORMAT)) {
                 log.error("error during read file name :wrong data format");
-                System.err.println("error:wrong data format");
                 continue;
             }
             s = test;
@@ -69,11 +66,10 @@ public class FileValidator {
      */
     public String findFile() {
         if (path == null) {
-            System.err.println("file for collection saving isn't specified");
-            log.error("file isn't specified");
+            log.error("file for collection saving isn't specified");
             path = readFileName();
         } else {
-            System.out.println("default file " + System.getenv("COLLECTION_PATH"));
+            log.info("default file " + System.getenv("COLLECTION_PATH"));
         }
         boolean isFileAlright = false;
         while (!isFileAlright) {
@@ -83,7 +79,7 @@ public class FileValidator {
                 path = readFileName();
             }
         }
-        System.out.println("file is set successfully");
+        log.info("file is set successfully");
         return path;
     }
 }

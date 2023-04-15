@@ -25,6 +25,8 @@ public class Clear implements NoArgument {
 
     public String execute() {
         controller.getPersonList().clear();
+        log.info(String.format("%s executed successfully", this.name()));
+
         return SUCCESS;
     }
     @Override
