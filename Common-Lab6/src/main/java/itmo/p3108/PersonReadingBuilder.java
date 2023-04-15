@@ -1,13 +1,13 @@
 package itmo.p3108;
 
 import itmo.p3108.adapter.LocalDateAdapter;
-import itmo.p3108.util.CheckData;
-import itmo.p3108.util.UserReader;
-import lombok.Getter;
 import itmo.p3108.model.Color;
 import itmo.p3108.model.Coordinates;
 import itmo.p3108.model.Country;
 import itmo.p3108.model.Location;
+import itmo.p3108.util.CheckData;
+import itmo.p3108.util.UserReader;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.Arrays;

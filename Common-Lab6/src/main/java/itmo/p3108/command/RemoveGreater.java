@@ -1,18 +1,21 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
+import itmo.p3108.model.Person;
+import itmo.p3108.util.CollectionController;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import itmo.p3108.model.Person;
 
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Optional;
 
 /**
  * Command Remove Greater,
@@ -43,15 +46,12 @@ public class RemoveGreater implements OneArgument {
     public String name() {
         return "remove_greater";
     }
-    @Override
-    public Class<?> getCommandClass() {
-        return this.getClass();
-    }
+  
     @Override
     public String execute(Object argument) {
         if (argument instanceof Person person) {
 
-            ArrayList<Person> arrayList = controller.getPersonList();
+            ArrayList<Person> arrayList = CollectionController.getInstance().getPersonList();
             Collection<Person> collection = arrayList.stream().filter(x -> comparator.compare(x, person) > 0).toList();
 
             if (arrayList.removeAll(collection)) {
@@ -67,7 +67,11 @@ public class RemoveGreater implements OneArgument {
 
         throw new ValidationException("Wrong Argument for RemoveGreater");
     }
-
+    @Override
+    public Optional<Command> prepare(String object) {
+        this.person = CreatePerson.createPerson();
+        return Optional.of(this);
+    }
     @Override
     public Object getParameter() {
         return person;

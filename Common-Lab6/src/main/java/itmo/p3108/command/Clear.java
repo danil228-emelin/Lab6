@@ -1,11 +1,15 @@
 package itmo.p3108.command;
 
+import itmo.p3108.PersonReadingBuilder;
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
+import itmo.p3108.util.CollectionController;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
+import java.util.Optional;
 
 /**
  * Command Clear,clear collection
@@ -24,15 +28,12 @@ public class Clear implements NoArgument {
     @Override
 
     public String execute() {
-        controller.getPersonList().clear();
+        CollectionController.getInstance().getPersonList().clear();
         log.info(String.format("%s executed successfully", this.name()));
 
         return SUCCESS;
     }
-    @Override
-    public Class<?> getCommandClass() {
-        return this.getClass();
-    }
+  
     @Override
     public String description() {
         return "clear : очистить коллекцию";
@@ -41,5 +42,10 @@ public class Clear implements NoArgument {
     @Override
     public String name() {
         return "clear";
+    }
+    @Override
+    public Optional<Command> prepare() {
+        PersonReadingBuilder.setId(1L);
+        return Optional.of(this);
     }
 }

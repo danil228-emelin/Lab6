@@ -1,15 +1,18 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
+import itmo.p3108.model.Person;
+import itmo.p3108.util.CollectionController;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import itmo.p3108.model.Person;
 
 import java.io.Serial;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -24,15 +27,12 @@ public class PrintDescending implements NoArgument {
     @Setter
     @NonNull
     private Comparator<Person> naturalComparatorOrder = (Comparator.comparing(Person::getPersonId));
-    @Override
-    public Class<?> getCommandClass() {
-        return this.getClass();
-    }
+  
     @Override
     public String execute() {
         log.info(String.format("%s executed successfully", this.name()));
         Comparator<Person> reversed_comparator = naturalComparatorOrder.reversed();
-        return controller
+        return CollectionController.getInstance()
                 .getPersonList()
                 .stream()
                 .sorted(reversed_comparator)
@@ -45,7 +45,10 @@ public class PrintDescending implements NoArgument {
     public String description() {
         return "print_descending : вывести элементы коллекции в порядке убывания";
     }
-
+    @Override
+    public Optional<Command> prepare() {
+        return Optional.of(this);
+    }
     @Override
     public String name() {
         return "print_descending";

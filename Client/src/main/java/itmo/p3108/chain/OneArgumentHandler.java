@@ -23,12 +23,12 @@ public class OneArgumentHandler implements Handler<Command> {
             }
             if (commandLine.length == 1) {
                 try {
-                    return oneArgument.execute(null);
+                    return oneArgument.prepare(null);
                 } catch (NullPointerException exception) {
                     throw new ValidationException(String.format("%s must have one argument", command.name()));
                 }
             }
-            return oneArgument.execute(commandLine[1]);
+            return oneArgument.prepare(commandLine[1]);
 
         }
         return HANDLER.processRequest(wrapperArgument);

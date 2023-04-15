@@ -27,7 +27,7 @@ public class ExecuteScript implements OneArgument {
     private static final long serialVersionUID = 549988001L;
     private static final String ERROR_PERMISSION = "ExecuteScript error during execute script:file  doesn't exist or unreadable";
     private final Set<Path> EXECUTED_FAILS = new HashSet<>();
-    private final int MAXIMUM_FILES = 49;
+    private  final int MAXIMUM_FILES = 49;
     private final int MAXIMUM_COMMANDS_IN_FILE = 15;
 
     @Override
@@ -36,7 +36,7 @@ public class ExecuteScript implements OneArgument {
     }
 
     @Override
-    public Optional<Command> execute(@NonNull String argument) {
+    public Optional<Command> prepare(@NonNull String argument) {
         Path test;
         try {
             test = Path.of(argument);

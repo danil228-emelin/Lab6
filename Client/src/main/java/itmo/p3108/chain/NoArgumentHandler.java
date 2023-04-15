@@ -21,7 +21,7 @@ public class NoArgumentHandler implements Handler<Command> {
                 throw new CommandException("Error during execution command " + command.name() + " doesn't have arguments");
             }
 
-            return noArgument.execute();
+            return noArgument.prepare();
 
         }
         throw new ValidationException("Command doesnt't implement NoArgument and OneArgument interfaces");

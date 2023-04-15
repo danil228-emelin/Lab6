@@ -1,12 +1,17 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
+import itmo.p3108.model.Person;
+import itmo.p3108.util.CollectionController;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import itmo.p3108.model.Person;
+
 import java.io.Serial;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -34,10 +39,7 @@ public class FilterStartsWithName implements  OneArgument {
     public String name() {
         return "filter_starts_with_name";
     }
-    @Override
-    public Class<?> getCommandClass() {
-        return this.getClass();
-    }
+  
     /**
      * set the argument
      */
@@ -47,7 +49,7 @@ public class FilterStartsWithName implements  OneArgument {
         if (argument instanceof String s) {
             log.info(String.format("%s executed successfully", this.name()));
             return
-                    controller
+                    CollectionController.getInstance()
                             .getPersonList()
                             .stream()
                             .filter(x -> x.getPersonName().startsWith(s))
@@ -59,7 +61,11 @@ public class FilterStartsWithName implements  OneArgument {
 
         throw new ValidationException("Wrong argument for FilterStartsWithName");
     }
-
+    @Override
+    public Optional<Command> prepare(@NonNull String argument) {
+        substring = argument;
+        return Optional.of(this);
+    }
     @Override
     public Object getParameter() {
         return substring;

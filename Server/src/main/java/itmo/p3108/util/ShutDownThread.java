@@ -1,12 +1,13 @@
 package itmo.p3108.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ShutDownThread {
-    private ShutDownThread() {
 
-    }
 
     public static void add(Thread thread) {
         Runtime.getRuntime().addShutdownHook(thread);

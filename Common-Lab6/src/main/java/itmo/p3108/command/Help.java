@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -30,15 +31,16 @@ public class Help implements NoArgument {
                 .map(Command::description)
                 .collect(Collectors.joining("\n"));
     }
-    @Override
-    public Class<?> getCommandClass() {
-        return this.getClass();
-    }
+  
     @Override
     public String description() {
         return "help : вывести справку по доступным командам";
     }
+    @Override
+    public Optional<Command> prepare() {
+        return Optional.of(this);
 
+    }
     @Override
     public String name() {
         return "help";

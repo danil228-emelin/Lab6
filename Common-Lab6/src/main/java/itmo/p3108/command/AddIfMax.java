@@ -1,13 +1,15 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
+import itmo.p3108.model.Person;
+import itmo.p3108.util.CollectionController;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import itmo.p3108.model.Person;
 
 import java.io.Serial;
 import java.util.Comparator;
@@ -42,27 +44,24 @@ public class AddIfMax implements OneArgument{
         return "add_if_max";
     }
 
-    @Override
-    public Class<?> getCommandClass() {
-        return this.getClass();
-    }
+  
 
 
     @Override
     public String execute(Object argument) {
         if (argument instanceof Person person) {
-            if (controller.getPersonList().size() == 0) {
-                controller.getPersonList().add(person);
+            if (CollectionController.getInstance().getPersonList().size() == 0) {
+                CollectionController.getInstance().getPersonList().add(person);
                 log.info(String.format("%s executed successfully", this.name()));
 
                 return SUCCESS;
             }
             Optional<Person> other =
-                    controller
+                    CollectionController.getInstance()
                             .getPersonList()
                             .stream().parallel().max(comparator);
             if (other.isPresent() && comparator.compare(person, other.get()) > 0) {
-                controller.getPersonList().add(person);
+                CollectionController.getInstance().getPersonList().add(person);
                 log.info(String.format("%s executed successfully", this.name()));
 
                 return SUCCESS;
@@ -74,8 +73,17 @@ public class AddIfMax implements OneArgument{
         log.error(String.format("%s wrong argument", this.name()));
 
         throw new ValidationException("Wrong argument for AddIfMax");
-    }
 
+    }
+    @Override
+    public Optional<Command> prepare(String object) {
+
+        if (object != null) {
+            throw new ValidationException("AddIfMax doesn't have argument");
+        }
+        this.person = CreatePerson.createPerson();
+        return Optional.of(this);
+    }
     @Override
     public Object getParameter() {
         return person;

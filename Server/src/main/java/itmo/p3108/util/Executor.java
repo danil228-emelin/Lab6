@@ -5,16 +5,18 @@ import itmo.p3108.UDPSender;
 import itmo.p3108.chain.Handler;
 import itmo.p3108.chain.HandlerOneArgument;
 import itmo.p3108.exception.ValidationException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Executor {
     private static final Handler HANDLER = new HandlerOneArgument();
 
-    private Executor() {
-    }
+
 
     public static void executeCommand(UDPSender udpSender, UDPReceiver receiver) {
 

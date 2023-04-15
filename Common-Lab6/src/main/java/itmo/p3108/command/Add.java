@@ -1,13 +1,17 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
+import itmo.p3108.model.Person;
+import itmo.p3108.util.CollectionController;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import itmo.p3108.model.Person;
 
 import java.io.Serial;
+import java.util.Optional;
 
 /**
  * Command Add,add element in collection
@@ -20,6 +24,7 @@ import java.io.Serial;
 public class Add implements OneArgument {
     @Serial
     private static final long serialVersionUID = 589988001L;
+   @Setter
     private Person person;
 
 
@@ -34,24 +39,31 @@ public class Add implements OneArgument {
         return "add";
     }
 
-    @Override
-    public Class<?> getCommandClass() {
-        return this.getClass();
-    }
+
 
     @Override
     public String execute(Object argument) {
         if (argument instanceof Person person) {
-            controller.getPersonList().add(person);
+            CollectionController.getInstance().getPersonList().add(person);
             log.info(String.format("%s executed successfully", this.name()));
             return "object added ";
         }
         log.error("Wrong argument for Add");
         throw new ValidationException("Wrong argument for Add");
     }
+    public Optional<Command> prepare(String argument) {
+
+        if (argument != null) {
+            throw new ValidationException("Add doesn't have argument");
+        }
+        person = CreatePerson.createPerson();
+        return Optional.of(this);
+    }
 
     @Override
     public Object getParameter() {
         return person;
     }
+
+
 }

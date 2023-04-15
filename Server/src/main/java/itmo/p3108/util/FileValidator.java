@@ -1,6 +1,7 @@
 package itmo.p3108.util;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.file.Files;
@@ -12,7 +13,7 @@ import java.nio.file.Paths;
  * name,permission,
  */
 @Slf4j
-
+@NoArgsConstructor
 public class FileValidator {
     private final static String FAIL_NAME_ERROR = "error during  file check  : name has wrong  format";
     private final static String PERMISSION_ERROR = "Permission error:no rights for writing and reading";

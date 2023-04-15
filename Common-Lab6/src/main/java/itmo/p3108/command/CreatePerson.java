@@ -2,14 +2,15 @@ package itmo.p3108.command;
 
 import itmo.p3108.PersonReadingBuilder;
 import itmo.p3108.model.Person;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.time.ZonedDateTime;
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreatePerson {
     private static final PersonReadingBuilder personReadingBuilder = PersonReadingBuilder.getInstance();
 
-    private CreatePerson() {
-    }
+
 
     public static Person createPerson() {
         Person

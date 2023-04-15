@@ -1,11 +1,15 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
+import itmo.p3108.model.Person;
+import itmo.p3108.util.CollectionController;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import itmo.p3108.model.Person;
+
 import java.io.Serial;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -26,13 +30,13 @@ public class Show implements NoArgument {
 
         log.info(String.format("%s executed successfully", this.name()));
 
-        return controller.getPersonList().stream()
+        return CollectionController.getInstance().getPersonList().stream()
                 .map(Person::toString)
                 .collect(Collectors.joining("\n"));
     }
     @Override
-    public Class<?> getCommandClass() {
-        return this.getClass();
+    public Optional<Command> prepare() {
+        return Optional.of(this);
     }
     @Override
     public String description() {

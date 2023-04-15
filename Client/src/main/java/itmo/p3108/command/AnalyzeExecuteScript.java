@@ -7,6 +7,8 @@ import itmo.p3108.util.CheckData;
 import itmo.p3108.util.Checking;
 import itmo.p3108.util.Invoker;
 import itmo.p3108.util.SerializeObject;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
@@ -16,6 +18,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AnalyzeExecuteScript {
 
 
@@ -26,9 +29,6 @@ public class AnalyzeExecuteScript {
     private static final String ADD_EXECUTE_SCRIPT_EXCEPTION1 = "Error add:next line empty ,but it  must have arguments";
     private static final String[] ADD_PROPER_ARGUMENTS_ORDER = {"personName", "coordinatesX", "coordinatesY", "personHeight", "personBirthday", "PersonEyeColorNumber", "PersonNationalityNumber", "locationX", "locationY", "locationZ", "locationName"};
     private static final int ARGUMENT_AMOUNT = 11;
-
-    private AnalyzeExecuteScript() {
-    }
 
     public static void analyze(String[] commands) {
 

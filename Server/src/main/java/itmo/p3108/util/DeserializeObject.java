@@ -1,5 +1,7 @@
 package itmo.p3108.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
@@ -8,9 +10,9 @@ import java.io.ObjectInputStream;
 import java.util.Optional;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DeserializeObject {
-    private DeserializeObject() {
-    }
+
 
     public static Optional<?> deserializeObject(byte[] serializedObject) {
         try {

@@ -1,7 +1,7 @@
 package itmo.p3108.util;
 
-import lombok.extern.slf4j.Slf4j;
 import itmo.p3108.model.Person;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

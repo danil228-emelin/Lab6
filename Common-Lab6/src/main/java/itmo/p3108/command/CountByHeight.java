@@ -4,6 +4,7 @@ import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
 import itmo.p3108.util.CheckData;
+import itmo.p3108.util.CollectionController;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -22,24 +23,42 @@ import java.util.Optional;
 public class CountByHeight implements OneArgument {
     @Serial
     private static final long serialVersionUID = 559988001L;
-    private static final String VALIDATION_ERROR = "CountBtHeight error during setting height:height must be more than 0";
     private double height;
 
+    @Override
+    public String description() {
+        return
+                "count_by_height height:посчитать количество элементов с заданным возростом";
+    }
 
     @Override
     public String name() {
         return "count_by_height";
     }
 
-    /**
-     * set height,call before execute method
-     */
-    public Optional<Command> execute(@NonNull String height) {
+
+    @Override
+    public String execute(Object argument) {
+        if (argument instanceof Double height) {
+            log.info(String.format("%s executed successfully", this.name()));
+
+            return Long.toString(CollectionController.getInstance().getPersonList().stream().parallel().filter(x -> x.getPersonHeight().compareTo(height) == 0).count());
+        }
+        log.error(String.format("%s Wrong argument", this.name()));
+        throw new ValidationException("Wrong argument for CountByHeight");
+    }
+
+    public Optional<Command> prepare(@NonNull String height) {
         boolean validation = new CheckData().checkPersonHeight(height);
         if (!validation) {
             throw new ValidationException("height isn't positive number");
         }
         this.height = Double.parseDouble(height);
-    return Optional.of(this);
+        return Optional.of(this);
+    }
+
+    @Override
+    public Object getParameter() {
+        return height;
     }
 }

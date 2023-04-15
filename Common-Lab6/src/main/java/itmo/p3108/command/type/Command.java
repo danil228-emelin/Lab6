@@ -1,7 +1,5 @@
 package itmo.p3108.command.type;
 
-import itmo.p3108.util.CollectionController;
-
 import java.io.Serializable;
 
 /**
@@ -9,10 +7,12 @@ import java.io.Serializable;
  * if command implement only this interface,it is implied that it has  one argument
  */
 public interface Command extends Serializable {
-    CollectionController controller = CollectionController.getInstance();
 
-    String description();
+    default String description() {
+        return "return nothing";
+    }
 
-    String name();
-    Class<?> getCommandClass();
+    default String name() {
+        return "no name";
+    }
 }
