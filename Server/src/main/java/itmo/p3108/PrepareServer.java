@@ -21,7 +21,7 @@ public class PrepareServer {
 
         Thread thread = new Thread(() -> {
             while (true) {
-                String line = UserReader.read();
+                String line = UserReader.readWithoutDollar();
                 if (line.equalsIgnoreCase("save")) {
                     save.execute();
                 }
