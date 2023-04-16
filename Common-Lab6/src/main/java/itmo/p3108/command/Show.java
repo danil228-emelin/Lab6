@@ -2,6 +2,7 @@ package itmo.p3108.command;
 
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
+import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.Person;
 import itmo.p3108.util.CollectionController;
 import lombok.AccessLevel;
@@ -27,7 +28,9 @@ public class Show implements NoArgument {
      */
     @Override
     public String execute() {
-
+        if (CollectionController.getInstance().isEmpty()) {
+            throw new ValidationException("Collection is empty");
+        }
         log.info(String.format("%s executed successfully", this.name()));
 
         return CollectionController.getInstance().getPersonList().stream()

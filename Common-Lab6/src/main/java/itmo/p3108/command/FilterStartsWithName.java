@@ -47,6 +47,9 @@ public class FilterStartsWithName implements  OneArgument {
     @Override
     public String execute(Object argument) {
         if (argument instanceof String s) {
+            if (CollectionController.getInstance().isEmpty()) {
+                throw new ValidationException("Collection is empty");
+            }
             log.info(String.format("%s executed successfully", this.name()));
             return
                     CollectionController.getInstance()

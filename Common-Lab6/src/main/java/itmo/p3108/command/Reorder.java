@@ -2,6 +2,7 @@ package itmo.p3108.command;
 
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
+import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.Person;
 import itmo.p3108.util.CollectionController;
 import lombok.AccessLevel;
@@ -26,6 +27,7 @@ public class Reorder implements NoArgument {
     private final static String SUCCESS = "Command reorder:collection reordered ";
     @Setter
     @NonNull
+    transient
     private Comparator<Person> naturalComparatorOrder = Comparator.comparing(Person::getPersonId);
   
     /**
@@ -35,6 +37,9 @@ public class Reorder implements NoArgument {
 
     @Override
     public String execute() {
+        if (CollectionController.getInstance().isEmpty()) {
+            throw new ValidationException("Collection is empty");
+        }
         naturalComparatorOrder = naturalComparatorOrder.reversed();
         CollectionController.getInstance().getPersonList().sort(naturalComparatorOrder);
         log.info(String.format("%s executed successfully", this.name()));

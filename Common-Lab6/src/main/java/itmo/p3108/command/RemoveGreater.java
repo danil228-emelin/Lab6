@@ -33,6 +33,7 @@ public class RemoveGreater implements OneArgument {
     private final static String FAIL = "command RemoveGreater deleted nothing ";
     @Setter
     @NonNull
+    transient
     private Comparator<Person> comparator = Comparator.comparing(Person::getPersonName).thenComparing(Person::getPersonBirthday);
     private Person person;
 
@@ -50,7 +51,9 @@ public class RemoveGreater implements OneArgument {
     @Override
     public String execute(Object argument) {
         if (argument instanceof Person person) {
-
+            if (CollectionController.getInstance().isEmpty()) {
+                throw new ValidationException("Collection is empty");
+            }
             ArrayList<Person> arrayList = CollectionController.getInstance().getPersonList();
             Collection<Person> collection = arrayList.stream().filter(x -> comparator.compare(x, person) > 0).toList();
 

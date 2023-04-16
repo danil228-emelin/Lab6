@@ -42,6 +42,9 @@ public class Update implements OneArgument {
     @Override
     public String execute(Object argument) {
         if (argument instanceof Person person1) {
+            if (CollectionController.getInstance().isEmpty()) {
+                throw new ValidationException("Collection is empty");
+            }
             boolean updated = CollectionController.getInstance().updatePerson(person1);
             if (!updated) {
                 log.error(String.format("%s Person with %d doesn't exist", this.name(),person1.getPersonId()));

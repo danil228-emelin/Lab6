@@ -29,6 +29,7 @@ public class Clear implements NoArgument {
 
     public String execute() {
         CollectionController.getInstance().getPersonList().clear();
+        PersonReadingBuilder.setId(1L);
         log.info(String.format("%s executed successfully", this.name()));
 
         return SUCCESS;

@@ -29,7 +29,6 @@ public class SerializeObject {
             }
             return true;
         } catch (IOException exception) {
-            exception.printStackTrace();
             log.error(exception.toString());
             return false;
         }

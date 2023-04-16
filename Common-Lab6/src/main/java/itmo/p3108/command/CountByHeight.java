@@ -40,6 +40,9 @@ public class CountByHeight implements OneArgument {
     @Override
     public String execute(Object argument) {
         if (argument instanceof Double height) {
+            if (CollectionController.getInstance().isEmpty()) {
+                throw new ValidationException("Collection is empty");
+            }
             log.info(String.format("%s executed successfully", this.name()));
 
             return Long.toString(CollectionController.getInstance().getPersonList().stream().parallel().filter(x -> x.getPersonHeight().compareTo(height) == 0).count());

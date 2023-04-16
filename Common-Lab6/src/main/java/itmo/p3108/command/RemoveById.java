@@ -38,6 +38,9 @@ public class RemoveById implements  OneArgument {
     @Override
     public String execute(Object argument) {
         if (argument instanceof Long id) {
+            if (CollectionController.getInstance().isEmpty()) {
+                throw new ValidationException("Collection is empty");
+            }
             if (id <= 0) {
                 log.error(" RemoveById error id<=0");
                 throw new ValidationException("RemoveById error id<=0");
