@@ -38,4 +38,23 @@
             <name>2</name>
         </location>
     </person>
+    <person>
+        <Id>1</Id>
+        <name>ad</name>
+        <coordinates>
+            <x>1</x>
+            <y>3.0</y>
+        </coordinates>
+        <creationDate>2023-04-16T19:26:57Z</creationDate>
+        <personHeight>1.0</personHeight>
+        <birthday>12-12-2003</birthday>
+        <eyeColor>BLUE</eyeColor>
+        <nationality>FRANCE</nationality>
+        <location>
+            <x>1.0</x>
+            <y>341.0</y>
+            <z>3.0</z>
+            <name>1</name>
+        </location>
+    </person>
 </collection>

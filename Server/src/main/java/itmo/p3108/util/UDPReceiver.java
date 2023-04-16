@@ -21,7 +21,7 @@ public class UDPReceiver {
             log.info("Create  DatagramSocket to receive messages");
             socket = new DatagramSocket(ServerPort);
         } catch (SocketException e) {
-            log.error(e.getMessage());
+            log.error(e.toString());
             System.exit(1);
         }
     }
@@ -35,7 +35,7 @@ public class UDPReceiver {
            log.info("receive message");
             return Optional.of(packet.getData());
         } catch (IOException exception) {
-            log.error(exception.getMessage());
+            log.error(exception.toString());
             return Optional.empty();
         }
 

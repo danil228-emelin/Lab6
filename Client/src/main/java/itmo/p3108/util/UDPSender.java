@@ -18,7 +18,7 @@ public class UDPSender {
             socket = new DatagramSocket();
             address = InetAddress.getByName("localhost");
         } catch (SocketException | UnknownHostException exception) {
-            log.error(exception.getMessage());
+            log.error(exception.toString());
             System.err.println("Error during creating UdpSender:can't create ");
             System.exit(1);
         }
@@ -33,7 +33,7 @@ public class UDPSender {
 
         } catch (IOException exception) {
             System.err.println("Error during sending message:can't send message to server");
-            log.error(exception.getMessage());
+            log.error(exception.toString());
 
         }
 
@@ -46,7 +46,7 @@ public class UDPSender {
             socket.send(packet);
         } catch (IOException exception) {
             System.err.println("Error during sending message:can't send message to server");
-            log.error(exception.getMessage());
+            log.error(exception.toString());
         }
 
     }

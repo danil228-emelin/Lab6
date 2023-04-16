@@ -23,7 +23,7 @@ public class UDPSender {
             channel.configureBlocking(false);
             log.info("Create DataGramChannel to send messages");
         } catch (IOException exception) {
-            log.error(exception.getMessage());
+            log.error(exception.toString());
         }
 
     }
@@ -38,7 +38,7 @@ public class UDPSender {
             buffer.flip();
             log.info("send message back for client "+clientPort);
         } catch (IOException exception) {
-            log.error(exception.getMessage());
+            log.error(exception.toString());
         }
     }
 }

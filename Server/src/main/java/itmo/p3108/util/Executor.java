@@ -28,8 +28,8 @@ public class Executor {
                         result = HANDLER.processRequest(messageServer.getCommand());
 
                     } catch (ValidationException validationException) {
-                        log.error(validationException.getMessage());
-                        result = validationException.getMessage();
+                        log.error(validationException.toString());
+                        result = validationException.toString();
                     }
                     udpSender.send(result, messageServer.getPort());
                 } else {

@@ -36,7 +36,7 @@ public class ServerChanel {
                     System.out.println("Try to get reply for saved messages \n");
                     return state.processLostConnection(udpSender, udpReceiver);
                 } catch (FileException exception) {
-                    log.error(exception.getMessage());
+                    log.error(exception.toString());
                     return "Connection with server lost,all messages saved";
                 }
             }

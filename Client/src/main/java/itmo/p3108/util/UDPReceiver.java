@@ -27,7 +27,7 @@ public class UDPReceiver {
             channel.bind(address);
         } catch (IOException exception) {
             System.err.println("Error during creating UDPReceiver:Can't create datagramChannel");
-            log.error(exception.getMessage());
+            log.error(exception.toString());
         }
 
     }
@@ -46,10 +46,10 @@ public class UDPReceiver {
                     break;
                 }
             } catch (InterruptedException exception) {
-                log.error(exception.getMessage());
+                log.error(exception.toString());
                 System.err.println("Error during receiving answer from server:Somebody tried to interrupted thread");
             } catch (IOException e) {
-                log.error(e.getMessage());
+                log.error(e.toString());
                 System.err.println("Error during receiving answer from server.");
                 return Optional.empty();
             }

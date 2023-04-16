@@ -30,7 +30,7 @@ public class SerializeObject {
             return true;
         } catch (IOException exception) {
             exception.printStackTrace();
-            log.error(exception+" "+exception.getMessage());
+            log.error(exception.toString());
             return false;
         }
     }
@@ -50,7 +50,7 @@ public class SerializeObject {
             return Optional.empty();
 
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error(e.toString());
             return Optional.empty();
         }
     }

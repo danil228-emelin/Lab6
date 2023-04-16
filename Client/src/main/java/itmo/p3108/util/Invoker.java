@@ -56,7 +56,7 @@ public class Invoker {
             log.error("Error during execution parameter must be a digit");
             System.err.println("Error during execution parameter must be a digit ");
         } catch (ValidationException | CommandException | FileException e) {
-            log.error(e.getMessage());
+            log.error(e.toString());
             System.err.println(e.getMessage());
         }
 

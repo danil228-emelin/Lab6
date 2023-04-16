@@ -1,6 +1,5 @@
 package itmo.p3108.command;
 
-import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.parser.Parser;
 import itmo.p3108.util.FileValidator;
@@ -16,7 +15,7 @@ import java.io.FileNotFoundException;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Save implements NoArgument, Command {
+public class Save implements NoArgument {
     /**
      * Saving collection by using class  @see {@link Parser}.
      * It parses collection xml format
@@ -27,11 +26,16 @@ public class Save implements NoArgument, Command {
     @Override
     public String execute() {
         try {
-            Parser.write(FileValidator.getPathToFile());
+            String path = FileValidator.getPathToFile();
+            if (path == null) {
+                log.error("File for collection isn't specified");
+                return "";
+            }
+            Parser.write(path);
             log.info(String.format("%s executed successfully", this.name()));
             return SUCCESS;
         } catch (JAXBException | FileNotFoundException e) {
-            log.error(e.getMessage());
+            log.error(e.toString());
             return FAIL_ERROR;
         }
     }

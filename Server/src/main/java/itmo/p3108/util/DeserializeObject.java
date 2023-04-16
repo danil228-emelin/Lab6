@@ -22,7 +22,7 @@ public class DeserializeObject {
             log.info("message deserialized");
             return Optional.of(object);
         } catch (IOException | ClassNotFoundException exception) {
-            log.error(exception.getMessage());
+            log.error(exception.toString());
             return Optional.empty();
         }
     }

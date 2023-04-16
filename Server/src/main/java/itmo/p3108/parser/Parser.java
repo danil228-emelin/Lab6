@@ -42,7 +42,7 @@ public final class Parser {
            log.info("Deparse collection");
             return Optional.of(controller);
         } catch (JAXBException e) {
-            log.error(e.getMessage());
+            log.error(e.toString());
             return Optional.empty();
         }
     }

@@ -41,7 +41,7 @@ public class ExecuteScript implements OneArgument {
         try {
             test = Path.of(argument);
         } catch (InvalidPathException exception) {
-            log.error(exception.getMessage());
+            log.error(exception.toString());
             throw new FileException("Error during executing script:wrong file name");
         }
         if (!Files.exists(test) || !Files.isReadable(test)) {
@@ -69,7 +69,7 @@ public class ExecuteScript implements OneArgument {
             AnalyzeExecuteScript.analyze(commands);
 
         } catch (IOException exception) {
-            log.error(exception.getMessage());
+            log.error(exception.toString());
             System.err.println("Error during executing script:File is wrong");
         }
 
