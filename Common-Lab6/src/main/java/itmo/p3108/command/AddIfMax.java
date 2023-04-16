@@ -29,6 +29,7 @@ public class AddIfMax implements OneArgument{
     private final static String FAIL = "Command AddIf: new element didn't added ";
     @Setter
     @NonNull
+    transient
     private Comparator<Person> comparator = Comparator.comparing(Person::getPersonName).thenComparing(Person::getPersonHeight);
 
     private Person person;
