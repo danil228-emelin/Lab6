@@ -1,7 +1,5 @@
 package itmo.p3108.util;
 
-import itmo.p3108.UDPReceiver;
-import itmo.p3108.UDPSender;
 import itmo.p3108.chain.Handler;
 import itmo.p3108.chain.HandlerOneArgument;
 import itmo.p3108.exception.ValidationException;

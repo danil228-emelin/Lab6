@@ -9,9 +9,6 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreatePerson {
     private static final PersonReadingBuilder personReadingBuilder = PersonReadingBuilder.getInstance();
-
-
-
     public static Person createPerson() {
         Person
                 person = Person

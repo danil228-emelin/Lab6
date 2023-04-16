@@ -1,14 +1,9 @@
 package itmo.p3108;
 
-import itmo.p3108.command.Save;
-import itmo.p3108.parser.Parser;
-import itmo.p3108.util.CollectionController;
 import itmo.p3108.util.Executor;
-import itmo.p3108.util.FileValidator;
-import itmo.p3108.util.ShutDownThread;
+import itmo.p3108.util.UDPReceiver;
+import itmo.p3108.util.UDPSender;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Optional;
 
 /**
  * Entry point of program
@@ -21,12 +16,8 @@ import java.util.Optional;
 @Slf4j
 public class Main {
     public static void main(String[] args) {
-        Save save = new Save();
-        ShutDownThread.createAndAdd(save::execute);
-        FileValidator fileValidator = new FileValidator();
-        String path = fileValidator.findFile();
-        Optional<CollectionController> optionalCollectionController = Parser.read(path);
-        optionalCollectionController.ifPresent(CollectionController::setController);
+        PrepareServer prepareServer = new PrepareServer();
+        prepareServer.prepare();
 
         UDPSender udpSender = new UDPSender();
         UDPReceiver udpReceiver = new UDPReceiver(4445);

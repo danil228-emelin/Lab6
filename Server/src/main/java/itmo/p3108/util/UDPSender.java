@@ -1,4 +1,4 @@
-package itmo.p3108;
+package itmo.p3108.util;
 
 import itmo.p3108.util.FlyweightClientSocket;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class UDPSender {
             channel = DatagramChannel.open();
             channel.bind(null);
             channel.configureBlocking(false);
-            log.error("Create DataGramChannel to send messages");
+            log.info("Create DataGramChannel to send messages");
         } catch (IOException exception) {
             log.error(exception.getMessage());
         }

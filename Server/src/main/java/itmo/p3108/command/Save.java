@@ -23,11 +23,11 @@ public class Save implements NoArgument, Command {
      */
     private final static String SUCCESS = "Command save:collection is saved";
     private final static String FAIL_ERROR = "Error during saving elements";
-  
+
     @Override
     public String execute() {
         try {
-            Parser.write(new FileValidator().getPath());
+            Parser.write(FileValidator.getPathToFile());
             log.info(String.format("%s executed successfully", this.name()));
             return SUCCESS;
         } catch (JAXBException | FileNotFoundException e) {

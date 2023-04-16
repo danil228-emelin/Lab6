@@ -16,7 +16,7 @@ import java.util.Optional;
 
 
 public final class PersonReadingBuilder {
-    private static PersonReadingBuilder createPerson = new PersonReadingBuilder();
+    private static final PersonReadingBuilder createPerson = new PersonReadingBuilder();
     @Getter
     private static Long id = 1L;
     private final CheckData checkData = new CheckData();

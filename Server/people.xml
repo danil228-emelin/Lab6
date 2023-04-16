@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<collection>
+    <person>
+        <Id>1</Id>
+        <name>1</name>
+        <coordinates>
+            <x>1</x>
+            <y>3.0</y>
+        </coordinates>
+        <creationDate>2023-04-16T13:43:16Z</creationDate>
+        <personHeight>2.0</personHeight>
+        <birthday>12-12-2003</birthday>
+        <eyeColor>YELLOW</eyeColor>
+        <nationality>RUSSIA</nationality>
+        <location>
+            <x>1.0</x>
+            <y>3.0</y>
+            <z>1.0</z>
+            <name>fj</name>
+        </location>
+    </person>
+</collection>

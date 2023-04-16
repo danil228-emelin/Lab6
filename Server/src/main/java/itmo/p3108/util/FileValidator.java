@@ -19,7 +19,7 @@ public class FileValidator {
     private final static String PERMISSION_ERROR = "Permission error:no rights for writing and reading";
     private final String FILE_NAME_FORMAT = "[^!_]+";
     @Getter
-    private String path = System.getenv("COLLECTION_PATH");
+    private static String pathToFile = System.getenv("COLLECTION_PATH");
 
     /**
      * @param test file name
@@ -34,8 +34,9 @@ public class FileValidator {
         if (!Files.exists(path)) {
             return false;
         }
-        if (Files.isWritable(path) && Files.isReadable(path))
+        if (Files.isWritable(path) && Files.isReadable(path)) {
             return true;
+        }
 
         log.error(String.format(PERMISSION_ERROR));
         return false;
@@ -66,21 +67,21 @@ public class FileValidator {
      * Set initial  xml file for serialization and deserialization
      */
     public String findFile() {
-        if (path == null) {
+        if (pathToFile == null) {
             log.error("file for collection saving isn't specified");
-            path = readFileName();
+            pathToFile = readFileName();
         } else {
             log.info("default file " + System.getenv("COLLECTION_PATH"));
         }
         boolean isFileAlright = false;
         while (!isFileAlright) {
 
-            isFileAlright = fileCheck(path);
+            isFileAlright = fileCheck(pathToFile);
             if (!isFileAlright) {
-                path = readFileName();
+                pathToFile = readFileName();
             }
         }
         log.info("file is set successfully");
-        return path;
+        return pathToFile;
     }
 }

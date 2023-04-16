@@ -1,4 +1,4 @@
-package itmo.p3108;
+package itmo.p3108.util;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
