@@ -16,7 +16,7 @@ public class OneArgumentHandler implements Handler<Command> {
     public Optional<Command> processRequest(WrapperArgument wrapperArgument) {
         Command command = wrapperArgument.getCommand();
         String[] commandLine = wrapperArgument.getArgument();
-        if (command instanceof OneArgument oneArgument) {
+        if (command instanceof OneArgument<?> oneArgument) {
             if (commandLine.length > 2) {
                 log.error("Error during execution command " + command.name() + " has one argument ");
                 throw new CommandException("Error during execution command " + command.name() + " has one argument ");

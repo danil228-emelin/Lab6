@@ -1,6 +1,5 @@
 package itmo.p3108.util;
 
-import itmo.p3108.util.FlyweightClientSocket;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.nio.channels.DatagramChannel;
  * Send to client.
  */
 public class UDPSender {
-    private final ByteBuffer buffer = ByteBuffer.allocate(100000);
+    private final ByteBuffer buffer = ByteBuffer.allocate(100_000);
     private DatagramChannel channel;
 
     public UDPSender() {
@@ -36,7 +35,7 @@ public class UDPSender {
             InetSocketAddress serverAddress = FlyweightClientSocket.getClientSocket(Integer.toString(clientPort));
             channel.send(buffer, serverAddress);
             buffer.flip();
-            log.info("send message back for client "+clientPort);
+            log.info("send message back to client "+clientPort);
         } catch (IOException exception) {
             log.error(exception.toString());
         }

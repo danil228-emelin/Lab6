@@ -22,13 +22,12 @@ import java.util.Set;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class ExecuteScript implements OneArgument {
+public class ExecuteScript implements OneArgument<String> {
     @Serial
     private static final long serialVersionUID = 549988001L;
     private static final String ERROR_PERMISSION = "ExecuteScript error during execute script:file  doesn't exist or unreadable";
+    private static int executingFails = 0;
     private final Set<Path> EXECUTED_FAILS = new HashSet<>();
-    private  final int MAXIMUM_FILES = 49;
-    private final int MAXIMUM_COMMANDS_IN_FILE = 15;
 
     @Override
     public String name() {
@@ -47,15 +46,14 @@ public class ExecuteScript implements OneArgument {
         if (!Files.exists(test) || !Files.isReadable(test)) {
             throw new FileException(ERROR_PERMISSION);
         }
-
         try {
             String[] commands = FileWorker.read(argument).split("\n");
+            final int MAXIMUM_COMMANDS_IN_FILE = 15;
             if (commands.length > MAXIMUM_COMMANDS_IN_FILE) {
                 log.error(String.format("Error during executing script:%s has disallowed amount of commands ", argument));
-
                 throw new ValidationException(String.format("Error during executing script:%s has disallowed amount of commands ", argument));
-
             }
+            final int MAXIMUM_FILES = 49;
             if (EXECUTED_FAILS.size() > MAXIMUM_FILES) {
                 log.error(String.format("Error during executing script:%s processed maximum filed already ", argument));
                 throw new ValidationException(String.format("Error during executing script:%s processed maximum filed already ", argument));
@@ -63,8 +61,8 @@ public class ExecuteScript implements OneArgument {
             if (EXECUTED_FAILS.contains(test)) {
                 log.error("Recursion is forbidden");
                 throw new ValidationException(String.format("Error during executing script:Recursion is forbidden,file already executed %s", argument));
-
             }
+            executingFails++;
             EXECUTED_FAILS.add(test);
             AnalyzeExecuteScript.analyze(commands);
 
@@ -72,7 +70,10 @@ public class ExecuteScript implements OneArgument {
             log.error(exception.toString());
             System.err.println("Error during executing script:File is wrong");
         }
-
+        executingFails--;
+        if (executingFails == 0) {
+            EXECUTED_FAILS.clear();
+        }
         return Optional.empty();
     }
 }

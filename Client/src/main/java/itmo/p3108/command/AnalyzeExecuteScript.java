@@ -38,14 +38,19 @@ public class AnalyzeExecuteScript {
             String commandLine = commands[commadcounter].trim();
             String[] commandArguments = commandLine.split("\\s+");
             String commandName = commandArguments[0].toLowerCase();
-            Optional<Command> optional = invoker.invoke(commandLine);
+            Optional<Command> optional = FlyWeightCommandFactory.getInstance().getCommand(commandName);
             if (optional.isEmpty()) {
                 log.error(String.format("line %d:command doesn't exist", commadcounter));
             }
 
             if (!Reflection.hasAnnotation(optional.get(), LineParameter.class)) {
+                Optional<Command> preparedCommand = invoker.invoke(commandLine);
                 log.info(String.format("Analyze Command from script-%s", commandName));
-                SerializeObject.serialize(optional.get());
+                if (preparedCommand.isEmpty()) {
+                    log.error("invoker can't handel command");
+                } else {
+                    SerializeObject.serialize(optional.get());
+                }
                 commadcounter++;
                 continue;
             }
