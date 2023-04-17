@@ -1,5 +1,6 @@
 package itmo.p3108.command;
 
+import itmo.p3108.LineParameter;
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
@@ -21,8 +22,9 @@ import java.util.Optional;
  * default comparator compared by name and them by id
  */
 @Slf4j
+@LineParameter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class AddIfMax implements OneArgument{
+public class AddIfMax implements OneArgument<Person> {
     @Serial
     private static final long serialVersionUID = 579988001L;
     private final static String SUCCESS = "Command AddIf: new element  added ";
@@ -44,8 +46,6 @@ public class AddIfMax implements OneArgument{
     public String name() {
         return "add_if_max";
     }
-
-  
 
 
     @Override
@@ -76,6 +76,7 @@ public class AddIfMax implements OneArgument{
         throw new ValidationException("Wrong argument for AddIfMax");
 
     }
+
     @Override
     public Optional<Command> prepare(String object) {
 
@@ -85,8 +86,14 @@ public class AddIfMax implements OneArgument{
         this.person = CreatePerson.createPerson();
         return Optional.of(this);
     }
+
     @Override
-    public Object getParameter() {
+    public Person getParameter() {
         return person;
+    }
+
+    @Override
+    public void setParameter(Person parameter) {
+        person = parameter;
     }
 }

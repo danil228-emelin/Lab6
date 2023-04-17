@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class CountByHeight implements OneArgument {
+public class CountByHeight implements OneArgument<Double> {
     @Serial
     private static final long serialVersionUID = 559988001L;
     private double height;
@@ -61,7 +61,12 @@ public class CountByHeight implements OneArgument {
     }
 
     @Override
-    public Object getParameter() {
+    public void setParameter(Double parameter) {
+        height=parameter;
+    }
+
+    @Override
+    public Double getParameter() {
         return height;
     }
 }

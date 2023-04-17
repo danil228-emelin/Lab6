@@ -1,5 +1,6 @@
 package itmo.p3108.command;
 
+import itmo.p3108.LineParameter;
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
@@ -20,11 +21,12 @@ import java.util.Optional;
  * Next line is treated as arguments
  */
 @Slf4j
+@LineParameter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Add implements OneArgument {
+public class Add implements OneArgument<Person> {
     @Serial
     private static final long serialVersionUID = 589988001L;
-   @Setter
+    @Setter
     private Person person;
 
 
@@ -40,7 +42,6 @@ public class Add implements OneArgument {
     }
 
 
-
     @Override
     public String execute(Object argument) {
         if (argument instanceof Person person) {
@@ -51,6 +52,7 @@ public class Add implements OneArgument {
         log.error("Wrong argument for Add");
         throw new ValidationException("Wrong argument for Add");
     }
+
     public Optional<Command> prepare(String argument) {
 
         if (argument != null) {
@@ -61,8 +63,13 @@ public class Add implements OneArgument {
     }
 
     @Override
-    public Object getParameter() {
+    public Person getParameter() {
         return person;
+    }
+
+    @Override
+    public void setParameter(Person parameter) {
+        person = parameter;
     }
 
 

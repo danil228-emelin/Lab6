@@ -19,7 +19,7 @@ import java.util.Optional;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class RemoveById implements  OneArgument {
+public class RemoveById implements OneArgument<Long> {
     @Serial
     private static final long serialVersionUID = 547968001L;
     private Long id;
@@ -34,7 +34,7 @@ public class RemoveById implements  OneArgument {
         return "remove_by_id";
     }
 
-  
+
     @Override
     public String execute(Object argument) {
         if (argument instanceof Long id) {
@@ -47,12 +47,12 @@ public class RemoveById implements  OneArgument {
             }
 
             if (!CollectionController.getInstance().isPersonExist(id)) {
-                log.info(String.format("%s person with  id %d doesn't exit", this.name(),id));
+                log.info(String.format("%s person with  id %d doesn't exit", this.name(), id));
 
                 return "RemoveById error:person with such id doesn't exit";
             }
             CollectionController.getInstance().getPersonList().removeIf(x -> x.getPersonId().equals(id));
-            log.info(String.format("%s person with  id %d deleted", this.name(),id));
+            log.info(String.format("%s person with  id %d deleted", this.name(), id));
 
             return "element with  id " + id + " was deleted ";
 
@@ -61,6 +61,7 @@ public class RemoveById implements  OneArgument {
 
         throw new ValidationException("Wrong argument for RemoveById");
     }
+
     @Override
     public Optional<Command> prepare(@NonNull String id) {
         boolean validation = new CheckData().checkPersonId(id);
@@ -70,8 +71,14 @@ public class RemoveById implements  OneArgument {
         this.id = Long.valueOf(id);
         return Optional.of(this);
     }
+
     @Override
-    public Object getParameter() {
+    public Long getParameter() {
         return id;
+    }
+
+    @Override
+    public void setParameter(Long parameter) {
+        id = parameter;
     }
 }

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class FilterStartsWithName implements  OneArgument {
+public class FilterStartsWithName implements  OneArgument<String> {
 
     @Serial
     private static final long serialVersionUID = 589988002L;
@@ -69,8 +69,14 @@ public class FilterStartsWithName implements  OneArgument {
         substring = argument;
         return Optional.of(this);
     }
+
     @Override
-    public Object getParameter() {
+    public void setParameter(String parameter) {
+        substring=parameter;
+    }
+
+    @Override
+    public String getParameter() {
         return substring;
     }
 }

@@ -1,5 +1,6 @@
 package itmo.p3108.command;
 
+import itmo.p3108.LineParameter;
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
 import itmo.p3108.exception.ValidationException;
@@ -25,8 +26,9 @@ import java.util.Optional;
  * provided with default comparator,compare by name and then birthday
  */
 @Slf4j
+@LineParameter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class RemoveGreater implements OneArgument {
+public class RemoveGreater implements OneArgument<Person> {
     @Serial
     private static final long serialVersionUID = 547268001L;
     private final static String SUCCESS = "command RemoveGreater deleted all suitable elements ";
@@ -47,7 +49,7 @@ public class RemoveGreater implements OneArgument {
     public String name() {
         return "remove_greater";
     }
-  
+
     @Override
     public String execute(Object argument) {
         if (argument instanceof Person person) {
@@ -70,13 +72,20 @@ public class RemoveGreater implements OneArgument {
 
         throw new ValidationException("Wrong Argument for RemoveGreater");
     }
+
     @Override
     public Optional<Command> prepare(String object) {
         this.person = CreatePerson.createPerson();
         return Optional.of(this);
     }
+
     @Override
-    public Object getParameter() {
+    public Person getParameter() {
         return person;
+    }
+
+    @Override
+    public void setParameter(Person parameter) {
+        person = parameter;
     }
 }

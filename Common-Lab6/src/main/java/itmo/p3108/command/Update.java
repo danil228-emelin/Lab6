@@ -22,12 +22,11 @@ import java.util.Optional;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Update implements OneArgument {
+public class Update implements OneArgument<Person> {
     @Serial
     private static final long serialVersionUID = 547248024L;
     private Person person;
 
-  
 
     @Override
     public String description() {
@@ -47,7 +46,7 @@ public class Update implements OneArgument {
             }
             boolean updated = CollectionController.getInstance().updatePerson(person1);
             if (!updated) {
-                log.error(String.format("%s Person with %d doesn't exist", this.name(),person1.getPersonId()));
+                log.error(String.format("%s Person with %d doesn't exist", this.name(), person1.getPersonId()));
 
                 throw new ValidationException(String.format("Person with %d doesn't exist", person1.getPersonId()));
             }
@@ -61,6 +60,7 @@ public class Update implements OneArgument {
         throw new ValidationException("argument for Update must be type Person");
 
     }
+
     @Override
     public Optional<Command> prepare(@NonNull String argument) {
         boolean validation = new CheckData().checkPersonId(argument);
@@ -73,8 +73,14 @@ public class Update implements OneArgument {
         PersonReadingBuilder.setId(PersonReadingBuilder.getId() - 1);
         return Optional.of(this);
     }
+
     @Override
-    public Object getParameter() {
+    public Person getParameter() {
         return person;
+    }
+
+    @Override
+    public void setParameter(Person parameter) {
+        person = parameter;
     }
 }

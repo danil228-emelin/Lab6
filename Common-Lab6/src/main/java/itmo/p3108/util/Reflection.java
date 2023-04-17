@@ -1,14 +1,14 @@
 package itmo.p3108.util;
 
+import itmo.p3108.command.type.Command;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.ReflectionsException;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
-import org.reflections.scanners.TypeAnnotationsScanner;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.Set;
@@ -38,24 +38,12 @@ public class Reflection {
         }
     }
 
-    public static Optional<Set<Class<?>>> findAllAnnotatedClasses(String packageName, Class<? extends Annotation> annotation) {
-        try {
-
-            Reflections reflections = new Reflections(packageName, new TypeAnnotationsScanner(), new SubTypesScanner(false));
-            return Optional.of(reflections.getTypesAnnotatedWith(annotation).stream().parallel().collect(Collectors.toSet()));
-
-        } catch (ReflectionsException exception) {
-            System.err.println(exception.getMessage());
-        }
-        return Optional.empty();
-    }
-
     /**
      * @param pathToCheckedClass source package
      * @param annotation         certain annotation to find
      * @return commands which has certain annotation
      */
-    public static Optional<Set<Method>> findAllMethodsWithAnnotation(String pathToCheckedClass, Class<? extends Annotation> annotation) {
+    public static Optional<Set<Method>> findAllMethodsWithAnnotation(@NonNull String pathToCheckedClass, @NonNull Class<? extends Annotation> annotation) {
         try {
 
 
@@ -70,7 +58,8 @@ public class Reflection {
         return Optional.empty();
     }
 
-    public static Field[] findAllFields(Class<?> someClass) {
-        return someClass.getDeclaredFields();
+    public static boolean hasAnnotation(@NonNull Command command, @NonNull Class<? extends Annotation> annotation) {
+        return command.getClass().isAnnotationPresent(annotation);
+
     }
 }

@@ -57,4 +57,23 @@
             <name>1</name>
         </location>
     </person>
+    <person>
+        <Id>2</Id>
+        <name>danil</name>
+        <coordinates>
+            <x>1</x>
+            <y>2.0</y>
+        </coordinates>
+        <creationDate>2023-04-17T16:41:10Z</creationDate>
+        <personHeight>182.0</personHeight>
+        <birthday>02-02-2004</birthday>
+        <eyeColor>GREEN</eyeColor>
+        <nationality>FRANCE</nationality>
+        <location>
+            <x>1.0</x>
+            <y>2.0</y>
+            <z>3.0</z>
+            <name>sochi</name>
+        </location>
+    </person>
 </collection>
