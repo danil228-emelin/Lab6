@@ -61,7 +61,10 @@ public class AddIfMax implements OneArgument<Person> {
                     CollectionController.getInstance()
                             .getPersonList()
                             .stream().parallel().max(comparator);
-            if (other.isPresent() && comparator.compare(person, other.get()) > 0) {
+            if (other.isEmpty()) {
+                CollectionController.getInstance().getPersonList().add(person);
+            }
+            if (comparator.compare(person, other.get()) > 0) {
                 CollectionController.getInstance().getPersonList().add(person);
                 log.info(String.format("%s executed successfully", this.name()));
 

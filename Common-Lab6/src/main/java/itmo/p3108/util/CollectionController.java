@@ -20,7 +20,7 @@ public final class CollectionController {
     private final ArrayList<Person> personList;
     private final LocalDate localDate;
 
-    private CollectionController() {
+    public CollectionController() {
         this.personList = new ArrayList<>();
         this.localDate = LocalDate.now();
     }
