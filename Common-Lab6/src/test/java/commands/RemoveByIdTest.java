@@ -23,12 +23,12 @@ public class RemoveByIdTest {
         controller.getPersonList().clear();
     }
     @Test
-//    @Disabled
     public void check_size_after_addIfMax() {
 
         Person testPerson = Person.builder().personId(1L).build();
         controller.getPersonList().add(testPerson);
-        removeById.execute(1L);
+       removeById.setParameter(1L);
+        removeById.execute();
         Assertions
                 .assertThat(controller
                         .getPersonList()

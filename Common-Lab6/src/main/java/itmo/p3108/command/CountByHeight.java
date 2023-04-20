@@ -38,13 +38,20 @@ public class CountByHeight implements OneArgument<Double> {
 
 
     @Override
-    public String execute(Double argument) {
+    public String execute() {
         if (CollectionController.getInstance().isEmpty()) {
             throw new ValidationException("Collection is empty");
         }
         log.info(String.format("%s executed successfully", this.name()));
 
-        return Long.toString(CollectionController.getInstance().getPersonList().stream().parallel().filter(x -> x.getPersonHeight().compareTo(height) == 0).count());
+        return Long.
+                toString(CollectionController
+                        .getInstance()
+                        .getPersonList()
+                        .stream()
+                        .parallel()
+                        .filter(x -> x.getPersonHeight().compareTo(height) == 0)
+                        .count());
     }
 
     public Optional<Command> prepare(@NonNull String height) {

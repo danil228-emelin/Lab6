@@ -21,8 +21,7 @@ public class Invoker {
     private static final Invoker INVOKER = new Invoker();
     private static final FlyWeightCommandFactory FLY_WEIGHT_COMMAND_FACTORY = FlyWeightCommandFactory.getInstance();
 
-    private Invoker() {
-    }
+
 
     public static Invoker getInstance() {
         return INVOKER;

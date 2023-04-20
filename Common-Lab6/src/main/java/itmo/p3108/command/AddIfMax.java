@@ -49,7 +49,7 @@ public class AddIfMax implements OneArgument<Person> {
 
 
     @Override
-    public String execute(Person argument) {
+    public String execute() {
             if (CollectionController.getInstance().getPersonList().size() == 0) {
                 CollectionController.getInstance().getPersonList().add(person);
                 log.info(String.format("%s executed successfully", this.name()));

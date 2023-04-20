@@ -51,8 +51,7 @@ public class RemoveGreater implements OneArgument<Person> {
     }
 
     @Override
-    public String execute(Object argument) {
-        if (argument instanceof Person person) {
+    public String execute() {
             if (CollectionController.getInstance().isEmpty()) {
                 throw new ValidationException("Collection is empty");
             }
@@ -66,11 +65,6 @@ public class RemoveGreater implements OneArgument<Person> {
             log.info(String.format("%s executed unsuccessfully", this.name()));
 
             return FAIL;
-
-        }
-        log.info(String.format("%s Wrong Argument", this.name()));
-
-        throw new ValidationException("Wrong Argument for RemoveGreater");
     }
 
     @Override

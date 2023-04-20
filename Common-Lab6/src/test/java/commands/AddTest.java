@@ -24,7 +24,8 @@ class AddTest {
     @Test
     public void check_size_after_add() {
         Person person = new Person();
-        add.execute(person);
+        add.setPerson(person);
+        add.execute();
         Assertions
                 .assertThat(controller.getPersonList().size())
                 .describedAs("Add command doesnt' add element in collection")

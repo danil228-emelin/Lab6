@@ -24,7 +24,6 @@ public class PrintDescendingTest {
         controller.getPersonList().clear();
     }
     @Test
-    //@Disabled
     public void check_test() {
         Person person1 = Person.builder().personId(1L).build();
         Person person2 = Person.builder().personId(2L).build();

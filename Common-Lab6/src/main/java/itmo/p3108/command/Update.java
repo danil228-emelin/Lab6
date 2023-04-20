@@ -39,27 +39,19 @@ public class Update implements OneArgument<Person> {
     }
 
     @Override
-    public String execute(Object argument) {
-        if (argument instanceof Person person1) {
-            if (CollectionController.getInstance().isEmpty()) {
-                throw new ValidationException("Collection is empty");
-            }
-            boolean updated = CollectionController.getInstance().updatePerson(person1);
-            if (!updated) {
-                log.error(String.format("%s Person with %d doesn't exist", this.name(), person1.getPersonId()));
+    public String execute() {
+        boolean updated = CollectionController.getInstance().updatePerson(person);
+        if (!updated) {
+            log.error(String.format("%s Person with %d doesn't exist", this.name(), person.getPersonId()));
 
-                throw new ValidationException(String.format("Person with %d doesn't exist", person1.getPersonId()));
-            }
-            log.info(String.format("%s executed successfully", this.name()));
-
-            return String.format("Person with %d updated", person1.getPersonId());
-
+            throw new ValidationException(String.format("Person with %d doesn't exist", person.getPersonId()));
         }
-        log.info(String.format("%s wrong argument", this.name()));
+        log.info(String.format("%s executed successfully", this.name()));
 
-        throw new ValidationException("argument for Update must be type Person");
+        return String.format("Person with %d updated", person.getPersonId());
 
     }
+
 
     @Override
     public Optional<Command> prepare(@NonNull String argument) {

@@ -27,8 +27,9 @@ public class FilterStartsWithNameTest {
     public void check_result_FilterStartsWithName() {
         Person person = Person.builder().personName("D").build();
         controller.getPersonList().add(person);
+        filterStartsWithName.setParameter("D");
         Assertions
-                .assertThat(filterStartsWithName.execute("D"))
+                .assertThat(filterStartsWithName.execute())
                 .describedAs("FilterStartsWithName  doesnt' find element in collection")
                 .isNotEmpty();
     }

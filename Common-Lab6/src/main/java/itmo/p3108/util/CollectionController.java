@@ -41,6 +41,10 @@ public final class CollectionController {
         return personList;
     }
 
+    public void add(Person person){
+        personList.add(person);
+    }
+
     /**
      * @return provided main information about collection
      * @see itmo.p3108.command.Info

@@ -30,8 +30,31 @@ public class ExecuteScript implements OneArgument<String> {
     private final Set<Path> EXECUTED_FAILS = new HashSet<>();
 
     @Override
+    public String description() {
+        return null;
+    }
+
+    @Override
     public String name() {
         return "execute_script";
+    }
+
+    @Override
+    public String execute() {
+       log.warn("execute script  doesn't execute ");
+        return "";
+    }
+
+    @Override
+    public String getParameter() {
+        log.warn("execute String doesn't have parameter");
+
+        return "";
+    }
+
+    @Override
+    public void setParameter(@NonNull String parameter) {
+    log.warn("execute script doesnt' have parameter");
     }
 
     @Override

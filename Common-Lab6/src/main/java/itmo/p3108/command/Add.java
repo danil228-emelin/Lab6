@@ -43,8 +43,8 @@ public class Add implements OneArgument<Person> {
 
 
     @Override
-    public String execute(Person argument) {
-        CollectionController.getInstance().getPersonList().add(argument);
+    public String execute() {
+        CollectionController.getInstance().getPersonList().add(person);
         log.info(String.format("%s executed successfully", this.name()));
         return "object added ";
 

@@ -23,12 +23,12 @@ public class CountByHeightTest {
         controller.getPersonList().clear();
     }
     @Test
-    //@Disabled
     public void check_size_after_addIfMax() {
-        Person testPerson = Person.builder().personName("A").personHeight(170.0).build();
-        controller.getPersonList().add(testPerson);
+        Person testPerson = Person.builder().personName("A").personHeight(170d).build();
+        controller.add(testPerson);
+       countByHeight.setParameter(170d);
         Assertions
-                .assertThat(countByHeight.execute(170.0))
+                .assertThat(countByHeight.execute())
                 .as("CountByHeight doesn't count element")
                 .isEqualTo("1");
     }

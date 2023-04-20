@@ -17,7 +17,7 @@ public class HandlerNoArgument implements Handler {
             if (OptionalServerCommand.isPresent()) {
                 NoArgument serverCommand = (NoArgument) OptionalServerCommand.get();
                 log.info(String.format("Try to execute %s", command.name()));
-                return serverCommand.execute();
+                return (String) serverCommand.execute();
             } else {
              log.error(String.format("can't find %s", command.name()));
                 return String.format("can't find %s", command.name());

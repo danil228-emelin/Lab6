@@ -15,7 +15,7 @@ public class NoArgumentHandler implements Handler<Command> {
     public Optional<Command> processRequest(WrapperArgument wrapperArgument) {
         Command command = wrapperArgument.getCommand();
         String[] commandLine = wrapperArgument.getArgument();
-        if (command instanceof NoArgument noArgument) {
+        if (command instanceof NoArgument<?> noArgument) {
             if (commandLine.length > 1) {
                 log.error("Error during execution command " + command.name() + " doesn't have arguments");
                 throw new CommandException("Error during execution command " + command.name() + " doesn't have arguments");
@@ -24,6 +24,6 @@ public class NoArgumentHandler implements Handler<Command> {
             return noArgument.prepare();
 
         }
-        throw new ValidationException("Command doesnt't implement NoArgument and OneArgument interfaces");
+        throw new ValidationException("Command doesn't implement NoArgument and OneArgument interfaces");
     }
 }

@@ -36,8 +36,7 @@ public class RemoveById implements OneArgument<Long> {
 
 
     @Override
-    public String execute(Object argument) {
-        if (argument instanceof Long id) {
+    public String execute() {
             if (CollectionController.getInstance().isEmpty()) {
                 throw new ValidationException("Collection is empty");
             }
@@ -56,10 +55,6 @@ public class RemoveById implements OneArgument<Long> {
 
             return "element with  id " + id + " was deleted ";
 
-        }
-        log.error(String.format("%s Wrong argument", this.name()));
-
-        throw new ValidationException("Wrong argument for RemoveById");
     }
 
     @Override

@@ -44,12 +44,12 @@ public class FilterStartsWithName implements OneArgument<String> {
      */
 
     @Override
-    public String execute(String argument) {
+    public String execute() {
         return
                 CollectionController.getInstance()
                         .getPersonList()
                         .stream()
-                        .filter(x -> x.getPersonName().startsWith(argument))
+                        .filter(x -> x.getPersonName().startsWith(substring))
                         .parallel()
                         .map(Person::toString)
                         .collect(Collectors.joining("\n"));

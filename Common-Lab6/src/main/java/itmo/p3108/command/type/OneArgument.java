@@ -5,7 +5,7 @@ import lombok.NonNull;
 import java.util.Optional;
 
 public interface OneArgument<T> extends Command {
-    String execute(T argument);
+    String execute();
 
     T getParameter();
 

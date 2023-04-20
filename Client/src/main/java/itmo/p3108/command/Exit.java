@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Exit implements NoArgument {
+public class Exit implements NoArgument<String> {
     @Override
     public String execute() {
         return "exit command";

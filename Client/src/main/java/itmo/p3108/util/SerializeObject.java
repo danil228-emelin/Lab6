@@ -63,5 +63,10 @@ public class SerializeObject {
         return MESSAGE.peek();
     }
 
-
+    public static int size() {
+        return MESSAGE.size();
+    }
+    public static void clear() {
+         MESSAGE.clear();
+    }
 }

@@ -18,7 +18,8 @@ public class HandlerOneArgument implements Handler {
             if (OptionalServerCommand.isPresent()) {
                 OneArgument serverCommand = (OneArgument) OptionalServerCommand.get();
                 log.info(String.format("Try to execute %s", command.name()));
-                return serverCommand.execute(clientCommand.getParameter());
+                serverCommand.setParameter(clientCommand.getParameter());
+                return serverCommand.execute();
             } else {
                 log.error(String.format("can't find %s", command.name()));
                 return String.format("can't find %s", command.name());
