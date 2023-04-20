@@ -16,14 +16,11 @@ import java.util.Optional;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Info implements NoArgument {
+public class Info implements NoArgument<String> {
     @Serial
     private static final long serialVersionUID = 589988003L;
     @Override
 
-    /**
-     * put out major information of collection
-     */
     public String execute() {
         log.info(String.format("%s executed successfully", this.name()));
 

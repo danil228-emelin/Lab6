@@ -21,7 +21,7 @@ import java.util.Optional;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Reorder implements NoArgument {
+public class Reorder implements NoArgument<String> {
     @Serial
     private static final long serialVersionUID = 547248001L;
     private final static String SUCCESS = "Command reorder:collection reordered ";

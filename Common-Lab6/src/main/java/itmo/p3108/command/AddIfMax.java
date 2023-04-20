@@ -49,15 +49,14 @@ public class AddIfMax implements OneArgument<Person> {
 
 
     @Override
-    public String execute(Object argument) {
-        if (argument instanceof Person person) {
+    public String execute(Person argument) {
             if (CollectionController.getInstance().getPersonList().size() == 0) {
                 CollectionController.getInstance().getPersonList().add(person);
                 log.info(String.format("%s executed successfully", this.name()));
 
                 return SUCCESS;
             }
-            Optional<Person> other =
+                Optional<Person> other =
                     CollectionController.getInstance()
                             .getPersonList()
                             .stream().parallel().max(comparator);
@@ -74,11 +73,7 @@ public class AddIfMax implements OneArgument<Person> {
 
             return FAIL;
         }
-        log.error(String.format("%s wrong argument", this.name()));
 
-        throw new ValidationException("Wrong argument for AddIfMax");
-
-    }
 
     @Override
     public Optional<Command> prepare(String object) {

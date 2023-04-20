@@ -8,11 +8,7 @@ import java.io.Serializable;
  */
 public interface Command extends Serializable {
 
-    default String description() {
-        return "return nothing";
-    }
+    String description();
 
-    default String name() {
-        return "no name";
-    }
+    String name();
 }

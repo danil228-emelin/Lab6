@@ -5,17 +5,11 @@ import lombok.NonNull;
 import java.util.Optional;
 
 public interface OneArgument<T> extends Command {
-    default String execute(Object argument) {
-        return "Do nothing";
-    }
+    String execute(T argument);
 
-    default T getParameter() {
-        return null;
-    }
+    T getParameter();
 
-    default Optional<Command> prepare(String argument) {
-        return Optional.empty();
-    }
- default void  setParameter(@NonNull T parameter){};
+    void setParameter(@NonNull T parameter);
 
+    Optional<Command> prepare(String argument);
 }

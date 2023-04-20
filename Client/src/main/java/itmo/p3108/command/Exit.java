@@ -14,10 +14,20 @@ import java.util.Optional;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Exit implements NoArgument {
+    @Override
+    public String execute() {
+        return "exit command";
+    }
+
     public Optional<Command> prepare() {
         log.warn(" command didn't save collection before exit");
         System.exit(0);
         return Optional.of(this);
+    }
+
+    @Override
+    public String description() {
+        return "Exit program";
     }
 
     @Override

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class PrintDescending implements NoArgument {
+public class PrintDescending implements NoArgument<String> {
     @Serial
     private static final long serialVersionUID = 547998001L;
     @Setter

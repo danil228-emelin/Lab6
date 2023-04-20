@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Clear implements NoArgument {
+public class Clear implements NoArgument<String> {
     @Serial
     private static final long serialVersionUID = 569988001L;
     private final static String SUCCESS = "Command Clear deleted elements ";
@@ -34,7 +34,7 @@ public class Clear implements NoArgument {
 
         return SUCCESS;
     }
-  
+
     @Override
     public String description() {
         return "clear : очистить коллекцию";
@@ -44,6 +44,7 @@ public class Clear implements NoArgument {
     public String name() {
         return "clear";
     }
+
     @Override
     public Optional<Command> prepare() {
         PersonReadingBuilder.setId(1L);

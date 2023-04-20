@@ -2,7 +2,6 @@ package itmo.p3108.command;
 
 import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.OneArgument;
-import itmo.p3108.exception.ValidationException;
 import itmo.p3108.model.Person;
 import itmo.p3108.util.CollectionController;
 import lombok.AccessLevel;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class FilterStartsWithName implements  OneArgument<String> {
+public class FilterStartsWithName implements OneArgument<String> {
 
     @Serial
     private static final long serialVersionUID = 589988002L;
@@ -39,31 +38,23 @@ public class FilterStartsWithName implements  OneArgument<String> {
     public String name() {
         return "filter_starts_with_name";
     }
-  
+
     /**
      * set the argument
      */
 
     @Override
-    public String execute(Object argument) {
-        if (argument instanceof String s) {
-            if (CollectionController.getInstance().isEmpty()) {
-                throw new ValidationException("Collection is empty");
-            }
-            log.info(String.format("%s executed successfully", this.name()));
-            return
-                    CollectionController.getInstance()
-                            .getPersonList()
-                            .stream()
-                            .filter(x -> x.getPersonName().startsWith(s))
-                            .parallel()
-                            .map(Person::toString)
-                            .collect(Collectors.joining("\n"));
-        }
-        log.info(String.format("%s Wrong argument", this.name()));
-
-        throw new ValidationException("Wrong argument for FilterStartsWithName");
+    public String execute(String argument) {
+        return
+                CollectionController.getInstance()
+                        .getPersonList()
+                        .stream()
+                        .filter(x -> x.getPersonName().startsWith(argument))
+                        .parallel()
+                        .map(Person::toString)
+                        .collect(Collectors.joining("\n"));
     }
+
     @Override
     public Optional<Command> prepare(@NonNull String argument) {
         substring = argument;
@@ -71,12 +62,12 @@ public class FilterStartsWithName implements  OneArgument<String> {
     }
 
     @Override
-    public void setParameter(String parameter) {
-        substring=parameter;
+    public String getParameter() {
+        return substring;
     }
 
     @Override
-    public String getParameter() {
-        return substring;
+    public void setParameter(String parameter) {
+        substring = parameter;
     }
 }

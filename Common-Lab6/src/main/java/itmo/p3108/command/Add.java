@@ -43,14 +43,11 @@ public class Add implements OneArgument<Person> {
 
 
     @Override
-    public String execute(Object argument) {
-        if (argument instanceof Person person) {
-            CollectionController.getInstance().getPersonList().add(person);
-            log.info(String.format("%s executed successfully", this.name()));
-            return "object added ";
-        }
-        log.error("Wrong argument for Add");
-        throw new ValidationException("Wrong argument for Add");
+    public String execute(Person argument) {
+        CollectionController.getInstance().getPersonList().add(argument);
+        log.info(String.format("%s executed successfully", this.name()));
+        return "object added ";
+
     }
 
     public Optional<Command> prepare(String argument) {

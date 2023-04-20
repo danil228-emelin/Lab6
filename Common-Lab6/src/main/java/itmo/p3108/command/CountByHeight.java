@@ -38,17 +38,13 @@ public class CountByHeight implements OneArgument<Double> {
 
 
     @Override
-    public String execute(Object argument) {
-        if (argument instanceof Double height) {
-            if (CollectionController.getInstance().isEmpty()) {
-                throw new ValidationException("Collection is empty");
-            }
-            log.info(String.format("%s executed successfully", this.name()));
-
-            return Long.toString(CollectionController.getInstance().getPersonList().stream().parallel().filter(x -> x.getPersonHeight().compareTo(height) == 0).count());
+    public String execute(Double argument) {
+        if (CollectionController.getInstance().isEmpty()) {
+            throw new ValidationException("Collection is empty");
         }
-        log.error(String.format("%s Wrong argument", this.name()));
-        throw new ValidationException("Wrong argument for CountByHeight");
+        log.info(String.format("%s executed successfully", this.name()));
+
+        return Long.toString(CollectionController.getInstance().getPersonList().stream().parallel().filter(x -> x.getPersonHeight().compareTo(height) == 0).count());
     }
 
     public Optional<Command> prepare(@NonNull String height) {
@@ -61,12 +57,12 @@ public class CountByHeight implements OneArgument<Double> {
     }
 
     @Override
-    public void setParameter(Double parameter) {
-        height=parameter;
+    public Double getParameter() {
+        return height;
     }
 
     @Override
-    public Double getParameter() {
-        return height;
+    public void setParameter(Double parameter) {
+        height = parameter;
     }
 }

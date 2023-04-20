@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @SuppressWarnings("unused")
-public class Help implements NoArgument {
+public class Help implements NoArgument<String> {
     @Serial
     private static final long serialVersionUID = 547988001L;
     /**

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Show implements NoArgument {
+public class Show implements NoArgument<String> {
     @Serial
     private static final long serialVersionUID = 547248021L;
     /**

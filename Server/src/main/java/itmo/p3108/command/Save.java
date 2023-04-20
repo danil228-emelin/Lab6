@@ -1,5 +1,6 @@
 package itmo.p3108.command;
 
+import itmo.p3108.command.type.Command;
 import itmo.p3108.command.type.NoArgument;
 import itmo.p3108.parser.Parser;
 import itmo.p3108.util.FileValidator;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
+import java.util.Optional;
 
 /**
  * Command  save,save elements of collection in xml file
@@ -38,6 +40,11 @@ public class Save implements NoArgument {
             log.error(e.toString());
             return FAIL_ERROR;
         }
+    }
+
+    @Override
+    public Optional<Command> prepare() {
+        return Optional.empty();
     }
 
     @Override
