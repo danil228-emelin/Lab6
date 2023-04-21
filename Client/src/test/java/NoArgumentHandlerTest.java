@@ -3,7 +3,7 @@ import itmo.p3108.chain.WrapperArgument;
 import itmo.p3108.command.Info;
 import itmo.p3108.command.type.Command;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 

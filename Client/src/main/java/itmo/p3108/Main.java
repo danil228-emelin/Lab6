@@ -20,7 +20,6 @@ import java.util.Optional;
 @Slf4j
 public class Main {
     public static void main(String[] args) {
-
         ServerChanel serverChanel = new ServerChanel(4445);
         Invoker invoker = Invoker.getInstance();
         while (true) {

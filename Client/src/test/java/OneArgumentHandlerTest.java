@@ -1,10 +1,9 @@
 import itmo.p3108.chain.OneArgumentHandler;
 import itmo.p3108.chain.WrapperArgument;
 import itmo.p3108.command.CountByHeight;
-import itmo.p3108.command.Update;
 import itmo.p3108.command.type.Command;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
@@ -15,10 +14,10 @@ public class OneArgumentHandlerTest {
 
     @Test
     public void check_execute_script() {
-        oneArgumentHandler= new OneArgumentHandler();
+        oneArgumentHandler = new OneArgumentHandler();
         wrapperArgument = new WrapperArgument();
         wrapperArgument.setCommand(new CountByHeight());
-        wrapperArgument.setArgument(new String[]{"count_by_height","1"});
+        wrapperArgument.setArgument(new String[]{"count_by_height", "1"});
         Optional<Command> command = oneArgumentHandler.processRequest(wrapperArgument);
         Assertions
                 .assertThat(command)

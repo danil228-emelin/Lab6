@@ -66,7 +66,14 @@ public class SerializeObject {
     public static int size() {
         return MESSAGE.size();
     }
+
     public static void clear() {
-         MESSAGE.clear();
+        MESSAGE.clear();
+    }
+
+    public static void add(byte[] bytes) {
+
+        MESSAGE.add(bytes);
+        log.info("message added  in commands for execution");
     }
 }

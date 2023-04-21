@@ -18,7 +18,6 @@ public class Main {
     public static void main(String[] args) {
         PrepareServer prepareServer = new PrepareServer();
         prepareServer.prepare();
-
         UDPSender udpSender = new UDPSender();
         UDPReceiver udpReceiver = new UDPReceiver(4445);
         while (true) {

@@ -1,7 +1,7 @@
 import itmo.p3108.command.type.Command;
 import itmo.p3108.util.Invoker;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
